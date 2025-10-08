@@ -22,7 +22,7 @@ public class Forecast
     /// <summary>
     /// Gets the temperature, in degrees Fahrenheit.
     /// </summary>
-    public int TemperatureF => 32 + (int)(this.TemperatureC / 0.5556);
+    public int TemperatureF => 32 + (int)(this.TemperatureC * 9d / 5);
 
     /// <summary>
     /// Gets or sets the summary.

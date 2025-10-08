@@ -19,14 +19,16 @@ public class ForecastServiceTests
             .Returns(Enumerable.Range(1, 3).Select(index => new Forecast
             {
                 Date = DateOnly.MinValue,
-                TemperatureC = 1,
+                TemperatureC = 25,
                 Summary = "Freezing",
             }));
 
         // Act
-        var actual = sut.GetForecast();
+        var actual = sut.GetForecast().ToList();
 
         // Assert
-        actual.Count().ShouldBe(3);
+        actual.Count.ShouldBe(3);
+        actual[0].TemperatureF.ShouldBe(77);
+
     }
 }

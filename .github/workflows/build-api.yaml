@@ -1,4 +1,4 @@
-name: Build
+name: Build api
 on:
   pull_request:
     branches: [main]
@@ -16,11 +16,6 @@ jobs:
 
     - name: Checkout self
       uses: actions/checkout@v4
-
-    - name: Setup dotnet
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: 8.0.x
         
     - name: Restore tools
       run: dotnet tool restore
