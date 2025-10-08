@@ -1,0 +1,12 @@
+## Notes
+### Commands
+```powershell
+# Restore tools
+dotnet tool restore
+
+# General clean up
+rd -r **/bin/; rd -r **/obj/;
+
+# Run unit tests
+gci -r -dir ../TestResults | % { rm -r $_ }; dotnet test -c Release -s .runsettings; dotnet reportgenerator -targetdir:coveragereport -reports:**/coverage.cobertura.xml -reporttypes:"html;jsonsummary"; start coveragereport/index.html;
+```
