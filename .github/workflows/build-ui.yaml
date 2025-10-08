@@ -3,7 +3,7 @@ on:
   pull_request:
     branches: [main]
     paths:
-    - apps/ui/**
+    - apps/portal-ui/**
   workflow_dispatch:
   
 jobs:
@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./apps/ui
+        working-directory: ./apps/portal-ui
     steps:
 
     - name: Checkout self
