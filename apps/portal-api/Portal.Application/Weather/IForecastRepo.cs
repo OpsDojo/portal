@@ -15,5 +15,5 @@ public interface IForecastRepo
     /// Gets the forecast.
     /// </summary>
     /// <returns>The forecast.</returns>
-    public IEnumerable<Forecast> GetForecast();
+    public IList<Forecast> GetForecast();
 }
