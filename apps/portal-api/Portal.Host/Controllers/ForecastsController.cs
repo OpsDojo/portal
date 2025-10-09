@@ -20,5 +20,5 @@ public class ForecastsController(IForecastService forecastService) : ControllerB
     /// </summary>
     /// <returns>Weather forecast.</returns>
     [HttpGet]
-    public IEnumerable<Forecast> Get() => forecastService.GetForecast();
+    public IList<Forecast> Get() => forecastService.GetForecast();
 }
