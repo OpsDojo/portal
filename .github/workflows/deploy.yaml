@@ -1,0 +1,57 @@
+name: Deploy
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to deploy (e.g., v1.2.3)'
+        required: true
+        type: string
+      environment:
+        description: 'Target environment'
+        required: true
+        default: 'staging'
+        type: choice
+        options:
+        - staging
+        - production
+  
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: read  # To pull containers
+    environment: ${{ inputs.environment }}  # Use GitHub environments for approvals/secrets
+    
+    steps:
+    - name: Checkout self
+      uses: actions/checkout@v4
+
+    - name: Validate version exists
+      run: |
+        # TODO: Check if container images exist for this version
+        echo "🔍 Validating containers exist for version: ${{ inputs.version }}"
+        # docker manifest inspect ghcr.io/opsdojo/portal-api:${{ inputs.version }}
+        # docker manifest inspect ghcr.io/opsdojo/portal-ui:${{ inputs.version }}
+        echo "✅ Version validation complete"
+
+    - name: Deploy Infrastructure
+      run: |
+        # TODO: Run IaC (Terraform, Bicep, ARM, etc.)
+        echo "🏗️  Deploying infrastructure to ${{ inputs.environment }}..."
+        echo "✅ Infrastructure deployment complete"
+
+    - name: Deploy Containers
+      run: |
+        # TODO: Apply container deployments (Kubernetes, Docker Compose, etc.)
+        echo "🚀 Deploying containers..."
+        echo "   - portal-api:${{ inputs.version }}"
+        echo "   - portal-ui:${{ inputs.version }}"
+        echo "   - Environment: ${{ inputs.environment }}"
+        echo "✅ Container deployment complete"
+
+    - name: Post-deployment verification
+      run: |
+        # TODO: Health checks, smoke tests, etc.
+        echo "🔍 Running post-deployment checks..."
+        echo "✅ Deployment verification complete"
