@@ -16,7 +16,7 @@ public class InMemForecastRepo : IForecastRepo
     ];
 
     /// <inheritdoc/>
-    public IEnumerable<Forecast> GetForecast()
+    public IList<Forecast> GetForecast()
     {
         return [.. Enumerable.Range(1, 5).Select(index => new Forecast
         {

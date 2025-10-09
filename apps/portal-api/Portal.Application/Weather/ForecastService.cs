@@ -11,5 +11,5 @@ using Portal.Domain.Weather;
 public class ForecastService(IForecastRepo forecastRepo) : IForecastService
 {
     /// <inheritdoc/>
-    public IEnumerable<Forecast> GetForecast() => forecastRepo.GetForecast();
+    public IList<Forecast> GetForecast() => forecastRepo.GetForecast();
 }

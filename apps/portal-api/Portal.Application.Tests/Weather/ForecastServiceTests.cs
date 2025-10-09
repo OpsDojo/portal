@@ -16,12 +16,12 @@ public class ForecastServiceTests
         var mockRepo = new Mock<IForecastRepo>();
         var sut = new ForecastService(mockRepo.Object);
         _ = mockRepo.Setup(m => m.GetForecast())
-            .Returns(Enumerable.Range(1, 3).Select(index => new Forecast
+            .Returns([.. Enumerable.Range(1, 3).Select(_ => new Forecast
             {
                 Date = DateOnly.MinValue,
                 TemperatureC = 25,
                 Summary = "Freezing",
-            }));
+            })]);
 
         // Act
         var actual = sut.GetForecast().ToList();
@@ -29,6 +29,5 @@ public class ForecastServiceTests
         // Assert
         actual.Count.ShouldBe(3);
         actual[0].TemperatureF.ShouldBe(77);
-
     }
 }
