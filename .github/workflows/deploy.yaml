@@ -44,12 +44,7 @@ jobs:
         path: workspace/common-bicep
         token: ${{ secrets.PAT_COMMON_READ }}
 
-    - name: Azure login
-      uses: azure/login@v2
-      with:
-        creds: ${{ secrets.AZURE_SCM_CREDS }}
-
-    - name: Deploy Bicep
+    - name: Deploy iac
       uses: azure/bicep-deploy@v2
       id: deploy_bicep
       with:
@@ -62,22 +57,27 @@ jobs:
         template-file: ./workspace/self/iac/main.bicep
         parameters: >
           {
-            "apiContainerImage": $API_CONTAINER
+            "apiContainerImage": ${{ env.API_CONTAINER }}
           }
 
-    - name: Extract static content
+    - name: Extract ui content
       run: |
         docker pull $UI_CONTAINER
         cid=$(docker create $UI_CONTAINER)
         docker cp $cid:/usr/share/nginx/html ./swa-content
         docker rm -v $cid
 
-    - name: Deploy Static Web App
+    - name: Deploy ui
       uses: Azure/static-web-apps-deploy@v1
       with:
         azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
         app_location: "swa-content"
         skip_app_build: true
+
+    - name: Azure login
+      uses: azure/login@v2
+      with:
+        creds: ${{ secrets.AZURE_SCM_CREDS }}
 
     - name: Post-deployment verification
       run: |
