@@ -44,6 +44,11 @@ jobs:
         path: workspace/common-bicep
         token: ${{ secrets.PAT_COMMON_READ }}
 
+    - name: Azure login
+      uses: azure/login@v2
+      with:
+        creds: ${{ secrets.AZURE_SCM_CREDS }}
+
     - name: Deploy iac
       uses: azure/bicep-deploy@v2
       id: deploy_bicep
@@ -73,11 +78,6 @@ jobs:
         azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
         app_location: "swa-content"
         skip_app_build: true
-
-    - name: Azure login
-      uses: azure/login@v2
-      with:
-        creds: ${{ secrets.AZURE_SCM_CREDS }}
 
     - name: Post-deployment verification
       run: |
