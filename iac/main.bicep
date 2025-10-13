@@ -55,7 +55,7 @@ module uiStaticWebAppDeploy '../../common-bicep/web/static-web-app.bicep' = {
     shortName: ''
     prefix: 'ui'
     suffix: suffix
-    location: location
+    location: 'westeurope' // uksouth not supported at present
     tags: tags
   }
 }
