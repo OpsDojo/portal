@@ -1,14 +1,8 @@
 // -----------------------------------------------------------------------------
 // Parameters
 // -----------------------------------------------------------------------------
-@description('Sql admin password.')
-@minLength(36)
-@secure()
-param sqlAdminPass string
-
-@description('A map of { "name": guid } pairs')
-@secure()
-param aadGroups object
+@description('The path of the API container image.')
+param apiContainerImage string
 
 @description('The resource location.')
 @minLength(3)
@@ -32,64 +26,42 @@ var tags = resourceGroup().tags
 // -----------------------------------------------------------------------------
 // Resources
 // -----------------------------------------------------------------------------
-module appConfigDeploy '../../common-bicep/integration/app-config.bicep' = {
-  name: 'appConfigDeploy'
+module apiAppServicePlanDeploy '../../common-bicep/web/app-service-plan.bicep' = {
+  name: 'apiAppServicePlanDeploy'
   params: {
-    disableLocalAccess: true
+    prefix: 'api'
     suffix: suffix
     location: location
     tags: tags
   }
 }
 
-module sqlServerDeploy '../../common-bicep/database/sqldb-server.bicep' = {
-  name: 'sqlServerDeploy'
+module apiAppServiceDeploy '../../common-bicep/web/app-service.bicep' = {
+  name: 'apiAppServiceDeploy'
   params: {
-    adminLogin: 'shared_infra'
-    adminPassword: sqlAdminPass
-    adminAadGroup: {
-      name: 'repos'
-      sid: aadGroups.repos
-    }
+    appServicePlanId: apiAppServicePlanDeploy.outputs.resourceId
+    containerUrl: apiContainerImage
+    shortName: ''
+    prefix: 'api'
     suffix: suffix
     location: location
     tags: tags
   }
 }
 
-module sqlServerDbDeploy '../../common-bicep/database/sqldb.bicep' = {
-  name: 'sqlServerDbDeploy'
+module uiStaticWebAppDeploy '../../common-bicep/web/static-web-app.bicep' = {
+  name: 'uiStaticWebAppDeploy'
   params: {
-    useFree: true
-    databaseName: 'DojoDB'
-    sqlServerResourceName: sqlServerDeploy.outputs.resourceName
+    shortName: ''
+    prefix: 'ui'
+    suffix: suffix
     location: location
     tags: tags
-  }
-}
-
-// -----------------------------------------------------------------------------
-// Permissions
-// -----------------------------------------------------------------------------
-module assignAppConfigOwner '../../common-bicep/security/sp-assign-rg-role.bicep' = {
-  name: 'assignAppConfigOwner'
-  params: {
-    role: 'App Configuration Data Owner'
-    principalIds: [aadGroups.admins, aadGroups.repos]
-    principalType: 'Group'
-  }
-}
-
-module assignAppConfigRead '../../common-bicep/security/sp-assign-rg-role.bicep' = {
-  name: 'assignAppConfigRead'
-  params: {
-    role: 'App Configuration Data Reader'
-    principalIds: [aadGroups.engineers]
-    principalType: 'Group'
   }
 }
 
 // -----------------------------------------------------------------------------
 // Output
 // -----------------------------------------------------------------------------
-output sqlConnection string = sqlServerDbDeploy.outputs.connectionString
+output apiAppUrl string = apiAppServiceDeploy.outputs.appUrl
+output uiAppUrl string = uiStaticWebAppDeploy.outputs.appUrl

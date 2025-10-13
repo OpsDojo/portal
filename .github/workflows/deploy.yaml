@@ -6,49 +6,71 @@ on:
         description: 'Version to deploy (e.g., v1.2.3)'
         required: true
         type: string
-      environment:
-        description: 'Target environment'
-        required: true
-        default: 'staging'
-        type: choice
-        options:
-        - staging
-        - production
-  
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
     permissions:
       contents: read
       packages: read  # To pull containers
-    environment: ${{ inputs.environment }}  # Use GitHub environments for approvals/secrets
-    
+    env:
+      API_CONTAINER: ghcr.io/opsdojo/portal-api:${{ inputs.version }}
+      UI_CONTAINER: ghcr.io/opsdojo/portal-ui:${{ inputs.version }}
+
     steps:
+
     - name: Checkout self
       uses: actions/checkout@v4
+      with:
+        path: workspace/self
 
-    - name: Validate version exists
-      run: |
-        # TODO: Check if container images exist for this version
-        echo "🔍 Validating containers exist for version: ${{ inputs.version }}"
-        # docker manifest inspect ghcr.io/opsdojo/portal-api:${{ inputs.version }}
-        # docker manifest inspect ghcr.io/opsdojo/portal-ui:${{ inputs.version }}
-        echo "✅ Version validation complete"
+    - name: Checkout bicep modules
+      uses: actions/checkout@v4
+      with:
+        repository: opsdojo/common-bicep
+        ref: ${{ inputs.bicep_version }}
+        path: workspace/common-bicep
+        token: ${{ secrets.PAT_COMMON_READ }}
 
-    - name: Deploy Infrastructure
-      run: |
-        # TODO: Run IaC (Terraform, Bicep, ARM, etc.)
-        echo "🏗️  Deploying infrastructure to ${{ inputs.environment }}..."
-        echo "✅ Infrastructure deployment complete"
+    - name: Azure login
+      uses: azure/login@v2
+      with:
+        creds: ${{ secrets.AZURE_SCM_CREDS }}
 
-    - name: Deploy Containers
+    - name: Verify container images
       run: |
-        # TODO: Apply container deployments (Kubernetes, Docker Compose, etc.)
-        echo "🚀 Deploying containers..."
-        echo "   - portal-api:${{ inputs.version }}"
-        echo "   - portal-ui:${{ inputs.version }}"
-        echo "   - Environment: ${{ inputs.environment }}"
-        echo "✅ Container deployment complete"
+        docker manifest inspect $API_CONTAINER || exit 1
+        docker manifest inspect $UI_CONTAINER || exit 1
+
+    - name: Deploy Bicep
+      uses: azure/bicep-deploy@v2
+      id: deploy_bicep
+      with:
+        name: 'main-deploy'
+        type: deployment
+        operation: create
+        scope: resourceGroup
+        subscription-id: ${{ fromJSON(secrets.AZURE_SCM_CREDS).subscriptionId }}
+        resource-group-name: rg-${{ secrets.AZURE_SCM_WORKLOAD }}-uks
+        template-file: ./workspace/self/iac/main.bicep
+        parameters: >
+          {
+            "apiContainerImage": $API_CONTAINER
+          }
+
+    - name: Extract static content
+      run: |
+        docker pull $UI_CONTAINER
+        cid=$(docker create $UI_CONTAINER)
+        docker cp $cid:/usr/share/nginx/html ./swa-content
+        docker rm -v $cid
+
+    - name: Deploy Static Web App
+      uses: Azure/static-web-apps-deploy@v1
+      with:
+        azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
+        app_location: "swa-content"
+        skip_app_build: true
 
     - name: Post-deployment verification
       run: |
