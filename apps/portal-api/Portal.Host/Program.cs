@@ -11,6 +11,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IForecastRepo, InMemForecastRepo>();
 builder.Services.AddScoped<IForecastService, ForecastService>();
+builder.Services.AddHealthChecks();
 
 var app = builder.Build();
 app.UseSwagger();
@@ -18,5 +19,6 @@ app.UseSwaggerUI();
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
+app.MapHealthChecks("/healthz");
 
 await app.RunAsync();

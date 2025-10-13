@@ -76,6 +76,15 @@ jobs:
         docker cp $cid:/usr/share/nginx/html ./swa-content
         docker rm -v $cid
 
+    - name: Update config
+      env:
+        API_APP_URL: ${{ steps.deploy_bicep.outputs.apiAppUrl }}
+      run: |
+        cat > ./swa-content/browser/env.js << EOF
+        window.__env = {
+          apiUrl: '${API_APP_URL}'
+        }; EOF
+
     - name: Get Static Web Apps deploy token
       run: |
         deployToken=$(az staticwebapp secrets list -n ${{ steps.deploy_bicep.outputs.uiSwaName }} --query 'properties.apiKey' -o tsv)

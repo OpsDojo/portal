@@ -41,6 +41,7 @@ module apiAppServiceDeploy '../../common-bicep/web/app-service.bicep' = {
   params: {
     appServicePlanId: apiAppServicePlanDeploy.outputs.resourceId
     containerUrl: apiContainerImage
+    healthCheckPath: '/healthz'
     shortName: ''
     prefix: 'api'
     suffix: suffix
