@@ -80,7 +80,7 @@ jobs:
       env:
         API_APP_URL: ${{ steps.deploy_bicep.outputs.apiAppUrl }}
       run: |
-        cat > ./swa-content/browser/env.js << EOF
+        cat > ./swa-content/portal-ui/browser/env.js << EOF
         window.__env = {
           apiUrl: '${API_APP_URL}'
         }; EOF
