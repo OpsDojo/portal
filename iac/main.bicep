@@ -65,3 +65,4 @@ module uiStaticWebAppDeploy '../../common-bicep/web/static-web-app.bicep' = {
 // -----------------------------------------------------------------------------
 output apiAppUrl string = apiAppServiceDeploy.outputs.appUrl
 output uiAppUrl string = uiStaticWebAppDeploy.outputs.appUrl
+output uiSwaName string = uiStaticWebAppDeploy.outputs.resourceName

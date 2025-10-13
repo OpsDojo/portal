@@ -6,6 +6,10 @@ on:
         description: 'Version to deploy (e.g., v1.2.3)'
         required: true
         type: string
+      bicep_version:
+        description: Bicep module version
+        required: true
+        default: v1
 
 jobs:
   deploy:
@@ -72,10 +76,19 @@ jobs:
         docker cp $cid:/usr/share/nginx/html ./swa-content
         docker rm -v $cid
 
+    - name: Get Static Web Apps deploy token
+      run: |
+        deployToken=$(az staticwebapp secrets list -n ${{ steps.deploy_bicep.outputs.uiSwaName }} --query 'properties.apiKey' -o tsv)
+        echo "::add-mask::$deployToken"
+        echo DEPLOY_TOKEN=$deployToken >> $GITHUB_ENV
+
     - name: Deploy ui
       uses: Azure/static-web-apps-deploy@v1
+      env:
+        DEPLOY_TOKEN: ${{ env.DEPLOY_TOKEN }}
       with:
-        azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
+        action: "upload"
+        azure_static_web_apps_api_token: ${{ env.DEPLOY_TOKEN }}
         app_location: "swa-content"
         skip_app_build: true
 
