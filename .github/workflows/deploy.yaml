@@ -24,6 +24,18 @@ jobs:
       with:
         path: workspace/self
 
+    - name: Login to GitHub Container Registry
+      uses: docker/login-action@v3
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Verify container images
+      run: |
+        docker manifest inspect $API_CONTAINER || exit 1
+        docker manifest inspect $UI_CONTAINER || exit 1
+
     - name: Checkout bicep modules
       uses: actions/checkout@v4
       with:
@@ -36,11 +48,6 @@ jobs:
       uses: azure/login@v2
       with:
         creds: ${{ secrets.AZURE_SCM_CREDS }}
-
-    - name: Verify container images
-      run: |
-        docker manifest inspect $API_CONTAINER || exit 1
-        docker manifest inspect $UI_CONTAINER || exit 1
 
     - name: Deploy Bicep
       uses: azure/bicep-deploy@v2
