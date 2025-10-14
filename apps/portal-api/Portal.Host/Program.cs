@@ -2,33 +2,23 @@
 // Copyright (c) ne1410s. All rights reserved.
 // </copyright>
 
-using Portal.Application.Weather;
-using Portal.Infrastructure;
+using Portal.Host.Startup;
 
 var builder = WebApplication.CreateBuilder(args);
 var config = builder.Configuration;
 
 builder.Services.AddControllers();
-builder.Services.AddCors(o => o.AddDefaultPolicy(policy =>
-{
-    var origins = config.GetSection("Cors:Origins").Get<string[]>()!;
-    _ = policy.WithOrigins(origins)
-        .AllowAnyMethod()
-        .AllowAnyHeader();
-}));
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-builder.Services.AddScoped<IForecastRepo, InMemForecastRepo>();
-builder.Services.AddScoped<IForecastService, ForecastService>();
+builder.Services.AddCorsSupport(config);
+builder.Services.AddSwaggerSupport(xmlFilePath: SwaggerExtensions.GetXmlFilePath<Program>());
+builder.Services.AddWeatherFeature();
 builder.Services.AddHealthChecks();
+builder.Services.AddAuthSupport(config);
 
 var app = builder.Build();
-app.UseCors();
-app.UseSwagger();
-app.UseSwaggerUI();
+app.UseCorsSupport();
+app.UseSwaggerSupport();
 app.UseHttpsRedirection();
-app.UseAuthorization();
-app.MapControllers();
+app.UseAuthSupport();
 app.MapHealthChecks("/healthz");
 
 await app.RunAsync();
