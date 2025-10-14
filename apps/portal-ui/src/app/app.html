@@ -233,6 +233,12 @@
       <h1>Hello, {{ title() }}</h1>
       <p>Congratulations! Your app is running. 🎉</p>
       <p>Api url: <b>{{spaConfig.apiUrl}}</b></p>
+      <div>
+        <p>Forecast:</p>
+        @for (f of $forecast | async; track f.date) {
+          <p>{{f.date}} - {{f.temperatureC}}C</p>
+        }
+      </div>
     </div>
     <div class="divider" role="separator" aria-label="Divider"></div>
     <div class="right-side">
