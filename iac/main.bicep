@@ -26,6 +26,17 @@ var tags = resourceGroup().tags
 // -----------------------------------------------------------------------------
 // Resources
 // -----------------------------------------------------------------------------
+module uiStaticWebAppDeploy '../../common-bicep/web/static-web-app.bicep' = {
+  name: 'uiStaticWebAppDeploy'
+  params: {
+    shortName: ''
+    prefix: 'ui'
+    suffix: suffix
+    location: 'westeurope' // uksouth not supported at present
+    tags: tags
+  }
+}
+
 module apiAppServicePlanDeploy '../../common-bicep/web/app-service-plan.bicep' = {
   name: 'apiAppServicePlanDeploy'
   params: {
@@ -42,21 +53,24 @@ module apiAppServiceDeploy '../../common-bicep/web/app-service.bicep' = {
     appServicePlanId: apiAppServicePlanDeploy.outputs.resourceId
     containerUrl: apiContainerImage
     healthCheckPath: '/healthz'
+    appSettings: [
+      {
+        name: 'AllowedHosts'
+        value: 'api-app-${suffix}.azurewebsites.net'
+      }
+      {
+        name: 'Cors__Origins__0'
+        value: 'https://opsdojo.ne1410s.co.uk'
+      }
+      {
+        name: 'Cors__Origins__1'
+        value: uiStaticWebAppDeploy.outputs.appUrl
+      }
+    ]
     shortName: ''
     prefix: 'api'
     suffix: suffix
     location: location
-    tags: tags
-  }
-}
-
-module uiStaticWebAppDeploy '../../common-bicep/web/static-web-app.bicep' = {
-  name: 'uiStaticWebAppDeploy'
-  params: {
-    shortName: ''
-    prefix: 'ui'
-    suffix: suffix
-    location: 'westeurope' // uksouth not supported at present
     tags: tags
   }
 }

@@ -83,7 +83,8 @@ jobs:
         cat > ./swa-content/env.js << EOF
         window.__env = {
           apiUrl: '${API_APP_URL}'
-        }; EOF
+        };
+        EOF
 
     - name: Get Static Web Apps deploy token
       run: |
