@@ -1,10 +1,21 @@
 import { TestBed } from '@angular/core/testing';
 import { App } from './app';
+import { provideSpaConfig } from '../config/spa-config.provider';
+import { provideHttpClient } from '@angular/common/http';
 
 describe('App', () => {
   beforeEach(async () => {
+    // Mock the global environment object that SpaConfig depends on
+    (window as any).__env = {
+      apiUrl: 'http://localhost:3000/api'
+    };
+
     await TestBed.configureTestingModule({
       imports: [App],
+      providers: [
+        provideHttpClient(),
+        provideSpaConfig()
+      ]
     }).compileComponents();
   });
 
