@@ -234,9 +234,15 @@
       <p>Congratulations! Your app is running. 🎉</p>
       <p>Api url: <b>{{spaConfig.apiUrl}}</b></p>
       <div>
-        <p>Forecast:</p>
-        @for (f of $forecast | async; track f.date) {
-          <p>{{f.date}} - {{f.temperatureC}}C</p>
+        @if (!msal.isIframe && !msal.loginDisplay) {
+          <input type="button" (click)="msal.login()" value="Log in"/>
+        }
+        @if (!msal.isIframe && msal.loginDisplay) {
+          <input type="button" (click)="msal.logout()" value="Log out"/>
+          <p>Forecast:</p>
+          @for (f of $forecast | async; track f.date) {
+            <p>{{f.date}} - {{f.temperatureC}}C</p>
+          }
         }
       </div>
     </div>
@@ -345,4 +351,7 @@
 <!-- * * * * * * * * * * End of Placeholder  * * * * * * * * * * * * -->
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 
-<router-outlet />
+  <!--This is to avoid reload during acquireTokenSilent() because of hidden iframe -->
+  @if (!msal.isIframe) {
+    <router-outlet/>
+  }
