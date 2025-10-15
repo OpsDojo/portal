@@ -80,11 +80,7 @@ jobs:
       env:
         API_APP_URL: ${{ steps.deploy_bicep.outputs.apiAppUrl }}
       run: |
-        cat > ./swa-content/env.js << EOF
-        window.__env = {
-          apiUrl: '${API_APP_URL}'
-        };
-        EOF
+        sed -i "s|apiUrl: '.*'[,]\\?|apiUrl: '${API_APP_URL}',|g" ./swa-content/env.js
 
     - name: Get Static Web Apps deploy token
       run: |
