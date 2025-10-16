@@ -56,7 +56,7 @@ export function MSALInterceptorConfigFactory(env: SpaConfig): MsalInterceptorCon
 export function MSALGuardConfigFactory(env: SpaConfig): MsalGuardConfiguration {
   return {
     interactionType: InteractionType.Redirect,
-    loginFailedRoute: '/login-failed',
+    loginFailedRoute: '/login',
     authRequest: {
       scopes: [env.ciamApiScope],
     },
