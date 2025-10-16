@@ -12,6 +12,8 @@ coverage
 
 package-lock.json
 angular.json
+tailwind.config.js
+postcss.config.js
 
 # Git
 
