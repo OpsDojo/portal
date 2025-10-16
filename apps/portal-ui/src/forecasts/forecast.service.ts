@@ -6,10 +6,12 @@ import { Forecast } from './forecast.model';
 
 @Injectable({ providedIn: 'root' })
 export class ForecastService {
-
   private readonly url: string;
 
-  constructor(private httpClient: HttpClient, env: SpaConfig) {
+  constructor(
+    private httpClient: HttpClient,
+    env: SpaConfig
+  ) {
     this.url = `${env.apiUrl}/forecasts`;
   }
 

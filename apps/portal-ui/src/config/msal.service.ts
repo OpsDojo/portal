@@ -1,6 +1,19 @@
 import { Inject, Injectable } from '@angular/core';
-import { MSAL_GUARD_CONFIG, MsalBroadcastService, MsalGuardConfiguration, MsalService } from '@azure/msal-angular';
-import { AuthenticationResult, EventMessage, EventType, InteractionStatus, InteractionType, PopupRequest, RedirectRequest } from '@azure/msal-browser';
+import {
+  MSAL_GUARD_CONFIG,
+  MsalBroadcastService,
+  MsalGuardConfiguration,
+  MsalService,
+} from '@azure/msal-angular';
+import {
+  AuthenticationResult,
+  EventMessage,
+  EventType,
+  InteractionStatus,
+  InteractionType,
+  PopupRequest,
+  RedirectRequest,
+} from '@azure/msal-browser';
 import { filter, Subject, takeUntil } from 'rxjs';
 
 import { SpaConfig } from './spa-config.model';
@@ -16,7 +29,7 @@ export class MsalAppService {
     protected env: SpaConfig,
     public authService: MsalService,
     private msalBroadcastService: MsalBroadcastService
-  ) { }
+  ) {}
 
   onLoggedIn = (_: string) => {};
   onLoggedOut = () => {};
@@ -25,17 +38,20 @@ export class MsalAppService {
     // Do this FIRST to ensure redirects are handled
     // (MsalRedirectComponent would do it, but it cannot be bootstrapped in standalone apps)
     this.authService.handleRedirectObservable().subscribe(() => {
-
       this.isIframe = window !== window.parent && !window.opener; // Remove this line to use Angular Universal
 
       this.authService.instance.enableAccountStorageEvents(); // Optional - This will enable ACCOUNT_ADDED and ACCOUNT_REMOVED events emitted when a user logs in or out of another tab or window
       this.msalBroadcastService.msalSubject$
         .pipe(
-          filter((msg: EventMessage) => msg.eventType === EventType.ACCOUNT_ADDED || msg.eventType === EventType.ACCOUNT_REMOVED),
+          filter(
+            (msg: EventMessage) =>
+              msg.eventType === EventType.ACCOUNT_ADDED ||
+              msg.eventType === EventType.ACCOUNT_REMOVED
+          )
         )
         .subscribe((_: EventMessage) => {
           if (this.authService.instance.getAllAccounts().length === 0) {
-            window.location.pathname = "/";
+            window.location.pathname = '/';
           } else {
             this.setLoginDisplay();
           }
@@ -49,14 +65,15 @@ export class MsalAppService {
         .subscribe(() => {
           this.setLoginDisplay();
           this.checkAndSetActiveAccount();
-        })
+        });
 
       this.msalBroadcastService.msalSubject$
         .pipe(
-          filter((msg: EventMessage) =>
-            msg.eventType === EventType.LOGIN_SUCCESS ||
-            msg.eventType === EventType.ACQUIRE_TOKEN_SUCCESS ||
-            msg.eventType === EventType.SSO_SILENT_SUCCESS
+          filter(
+            (msg: EventMessage) =>
+              msg.eventType === EventType.LOGIN_SUCCESS ||
+              msg.eventType === EventType.ACQUIRE_TOKEN_SUCCESS ||
+              msg.eventType === EventType.SSO_SILENT_SUCCESS
           ),
           takeUntil(this._destroying$)
         )
@@ -65,7 +82,7 @@ export class MsalAppService {
           this.authService.instance.setActiveAccount(payload.account);
           return result;
         });
-      });
+    });
   }
 
   setLoginDisplay() {
@@ -77,15 +94,18 @@ export class MsalAppService {
         // This nested chain of methods allows us to not just connect and disconnect to signalr
         // but also (timely) automatic instant connection on new visit when already logged in
         const scopes = [this.env.ciamApiScope];
-        this.authService.instance.initialize()
-          .then(_ => {
-            this.authService.instance.acquireTokenSilent({ scopes })
-              .then(result => this.onLoggedIn(result.accessToken))
-              .catch(error => {
-                console.warn('Silent token acquisition failed, falling back to interactive login', error);
-                this.authService.loginRedirect({ scopes });
-              });
-          });
+        this.authService.instance.initialize().then((_) => {
+          this.authService.instance
+            .acquireTokenSilent({ scopes })
+            .then((result) => this.onLoggedIn(result.accessToken))
+            .catch((error) => {
+              console.warn(
+                'Silent token acquisition failed, falling back to interactive login',
+                error
+              );
+              this.authService.loginRedirect({ scopes });
+            });
+        });
       }
     }
   }
@@ -115,19 +135,22 @@ export class MsalAppService {
   login(userFlowRequest?: RedirectRequest | PopupRequest) {
     if (this.msalGuardConfig.interactionType === InteractionType.Popup) {
       if (this.msalGuardConfig.authRequest) {
-        this.authService.loginPopup({ ...this.msalGuardConfig.authRequest, ...userFlowRequest } as PopupRequest)
+        this.authService
+          .loginPopup({ ...this.msalGuardConfig.authRequest, ...userFlowRequest } as PopupRequest)
           .subscribe((response: AuthenticationResult) => {
             this.authService.instance.setActiveAccount(response.account);
           });
       } else {
-        this.authService.loginPopup(userFlowRequest)
-          .subscribe((response: AuthenticationResult) => {
-            this.authService.instance.setActiveAccount(response.account);
-          });
+        this.authService.loginPopup(userFlowRequest).subscribe((response: AuthenticationResult) => {
+          this.authService.instance.setActiveAccount(response.account);
+        });
       }
     } else {
       if (this.msalGuardConfig.authRequest) {
-        this.authService.loginRedirect({ ...this.msalGuardConfig.authRequest, ...userFlowRequest } as RedirectRequest);
+        this.authService.loginRedirect({
+          ...this.msalGuardConfig.authRequest,
+          ...userFlowRequest,
+        } as RedirectRequest);
       } else {
         this.authService.loginRedirect(userFlowRequest);
       }
@@ -137,7 +160,7 @@ export class MsalAppService {
   logout() {
     if (this.msalGuardConfig.interactionType === InteractionType.Popup) {
       this.authService.logoutPopup({
-        mainWindowRedirectUri: "/"
+        mainWindowRedirectUri: '/',
       });
     } else {
       this.authService.logoutRedirect();

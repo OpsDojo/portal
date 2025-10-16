@@ -1,5 +1,4 @@
 <main class="main">
-
   <div>
     @if (!msal.isIframe && !msal.loginDisplay) {
       <input type="button" (click)="msal.login()" value="Log in" />
@@ -8,11 +7,10 @@
       <input type="button" (click)="msal.logout()" value="Log out" />
       <p>Forecast:</p>
       @for (f of $forecast | async; track f.date) {
-        <p>{{f.date}} - {{f.temperatureC}}C</p>
+        <p>{{ f.date }} - {{ f.temperatureC }}C</p>
       }
     }
   </div>
-
 </main>
 
 <!--This is to avoid reload during acquireTokenSilent() because of hidden iframe -->

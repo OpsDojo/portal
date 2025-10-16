@@ -12,24 +12,27 @@ import { MsalAppService } from '../config/msal.service';
   selector: 'app-root',
   imports: [RouterOutlet, CommonModule],
   templateUrl: './app.html',
-  styleUrl: './app.scss'
+  styleUrl: './app.scss',
 })
 export class App implements OnInit, AfterViewInit, OnDestroy {
-
   public $forecast: Observable<Forecast[]> | undefined;
 
   constructor(
     public msal: MsalAppService,
     public readonly spaConfig: SpaConfig,
-    private forecastService: ForecastService) {}
+    private forecastService: ForecastService
+  ) {}
 
   ngOnInit(): void {
     this.$forecast = this.forecastService.getForecast();
   }
 
-  ngAfterViewInit() { this.msal.init(); }
-  ngOnDestroy() { this.msal.dispose(); }
-
+  ngAfterViewInit() {
+    this.msal.init();
+  }
+  ngOnDestroy() {
+    this.msal.dispose();
+  }
 
   protected readonly title = signal('portal-ui');
 }
