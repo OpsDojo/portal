@@ -37,9 +37,9 @@ export class LoginComponent {
   async login() {
     try {
       await this.msal.login();
-      // Navigate to home after successful login
+      // Navigate to dashboard after successful login
       if (this.msal.loginDisplay) {
-        this.router.navigate(['/']);
+        this.router.navigate(['/dashboard']);
       }
     } catch (error) {
       console.error('Login failed:', error);

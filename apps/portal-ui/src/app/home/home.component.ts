@@ -84,7 +84,7 @@ export class HomeComponent implements OnInit {
   async logout() {
     try {
       await this.msal.logout();
-      this.router.navigate(['/login']);
+      this.router.navigate(['/']);
     } catch (error) {
       console.error('Logout failed:', error);
     }
