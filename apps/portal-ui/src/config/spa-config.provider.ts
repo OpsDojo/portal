@@ -1,9 +1,21 @@
-import { HTTP_INTERCEPTORS } from "@angular/common/http";
-import { EnvironmentProviders, makeEnvironmentProviders } from "@angular/core";
-import { MsalInterceptor, MSAL_INSTANCE, MSAL_GUARD_CONFIG, MSAL_INTERCEPTOR_CONFIG, MsalService, MsalGuard, MsalBroadcastService } from "@azure/msal-angular";
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { EnvironmentProviders, makeEnvironmentProviders } from '@angular/core';
+import {
+  MsalInterceptor,
+  MSAL_INSTANCE,
+  MSAL_GUARD_CONFIG,
+  MSAL_INTERCEPTOR_CONFIG,
+  MsalService,
+  MsalGuard,
+  MsalBroadcastService,
+} from '@azure/msal-angular';
 
-import { MSALInstanceFactory, MSALGuardConfigFactory, MSALInterceptorConfigFactory } from "./msal.factory";
-import { SpaConfig } from "./spa-config.model";
+import {
+  MSALInstanceFactory,
+  MSALGuardConfigFactory,
+  MSALInterceptorConfigFactory,
+} from './msal.factory';
+import { SpaConfig } from './spa-config.model';
 
 export function provideSpaConfig(): EnvironmentProviders {
   return makeEnvironmentProviders([

@@ -1,5 +1,4 @@
 export class SpaConfig {
-
   /** The root url of the api. */
   readonly apiUrl: string;
 
