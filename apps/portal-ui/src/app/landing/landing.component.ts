@@ -31,14 +31,14 @@ import { MsalAppService } from '../../config/msal.service';
 
             <!-- CTA Buttons -->
             <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <a
+                routerLink="/dashboard"
+                class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl"
+              >
+                Dashboard
+              </a>
+
               @if (msal.loginDisplay) {
-                <!-- Already logged in - go to dashboard -->
-                <a
-                  routerLink="/dashboard"
-                  class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl"
-                >
-                  Go to Dashboard
-                </a>
                 <button
                   (click)="msal.logout()"
                   class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold py-3 px-8 rounded-lg transition-all duration-200"
@@ -46,19 +46,12 @@ import { MsalAppService } from '../../config/msal.service';
                   Sign Out
                 </button>
               } @else {
-                <!-- Not logged in - show login options -->
                 <button
                   (click)="msal.login()"
-                  class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl"
-                >
-                  Get Started
-                </button>
-                <a
-                  routerLink="/login"
-                  class="bg-white hover:bg-gray-50 text-blue-600 font-semibold py-3 px-8 rounded-lg border-2 border-blue-600 transition-all duration-200"
+                  class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-lg transition-all duration-200"
                 >
                   Sign In
-                </a>
+                </button>
               }
             </div>
           </div>
