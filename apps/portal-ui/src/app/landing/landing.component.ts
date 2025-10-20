@@ -31,34 +31,33 @@ import { MsalAppService } from '../../config/msal.service';
 
             <!-- CTA Buttons -->
             <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <a
+                routerLink="/dashboard"
+                class="bg-white hover:bg-gray-50 text-blue-600 border-2 border-blue-600 hover:border-blue-700 font-semibold py-3 px-8 rounded-lg transition-all duration-200 flex items-center gap-2"
+                title="Go to Dashboard"
+              >
+                <i class="fas fa-tachometer-alt"></i>
+                Dashboard
+              </a>
+
               @if (msal.loginDisplay) {
-                <!-- Already logged in - go to dashboard -->
-                <a
-                  routerLink="/dashboard"
-                  class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl"
-                >
-                  Go to Dashboard
-                </a>
                 <button
                   (click)="msal.logout()"
-                  class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold py-3 px-8 rounded-lg transition-all duration-200"
+                  class="bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-8 rounded-lg transition-all duration-200 flex items-center gap-2"
+                  title="Log Out"
                 >
-                  Sign Out
+                  <i class="fas fa-sign-out-alt"></i>
+                  Log Out
                 </button>
               } @else {
-                <!-- Not logged in - show login options -->
                 <button
                   (click)="msal.login()"
-                  class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl"
+                  class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-lg transition-all duration-200 flex items-center gap-2"
+                  title="Log In"
                 >
-                  Get Started
+                  <i class="fas fa-sign-in-alt"></i>
+                  Log In
                 </button>
-                <a
-                  routerLink="/login"
-                  class="bg-white hover:bg-gray-50 text-blue-600 font-semibold py-3 px-8 rounded-lg border-2 border-blue-600 transition-all duration-200"
-                >
-                  Sign In
-                </a>
               }
             </div>
           </div>
