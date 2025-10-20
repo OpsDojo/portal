@@ -33,7 +33,7 @@ import { MsalAppService } from '../../config/msal.service';
             <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <a
                 routerLink="/dashboard"
-                class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl flex items-center gap-2"
+                class="bg-white hover:bg-gray-50 text-blue-600 border-2 border-blue-600 hover:border-blue-700 font-semibold py-3 px-8 rounded-lg transition-all duration-200 flex items-center gap-2"
                 title="Go to Dashboard"
               >
                 <i class="fas fa-tachometer-alt"></i>
