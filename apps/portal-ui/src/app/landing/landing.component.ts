@@ -43,7 +43,7 @@ import { MsalAppService } from '../../config/msal.service';
               @if (msal.loginDisplay) {
                 <button
                   (click)="msal.logout()"
-                  class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold py-3 px-8 rounded-lg transition-all duration-200 flex items-center gap-2"
+                  class="bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-8 rounded-lg transition-all duration-200 flex items-center gap-2"
                   title="Log Out"
                 >
                   <i class="fas fa-sign-out-alt"></i>
