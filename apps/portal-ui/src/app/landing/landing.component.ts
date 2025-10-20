@@ -33,24 +33,30 @@ import { MsalAppService } from '../../config/msal.service';
             <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <a
                 routerLink="/dashboard"
-                class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl"
+                class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl flex items-center gap-2"
+                title="Go to Dashboard"
               >
+                <i class="fas fa-tachometer-alt"></i>
                 Dashboard
               </a>
 
               @if (msal.loginDisplay) {
                 <button
                   (click)="msal.logout()"
-                  class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold py-3 px-8 rounded-lg transition-all duration-200"
+                  class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold py-3 px-8 rounded-lg transition-all duration-200 flex items-center gap-2"
+                  title="Log Out"
                 >
-                  Sign Out
+                  <i class="fas fa-sign-out-alt"></i>
+                  Log Out
                 </button>
               } @else {
                 <button
                   (click)="msal.login()"
-                  class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-lg transition-all duration-200"
+                  class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-lg transition-all duration-200 flex items-center gap-2"
+                  title="Log In"
                 >
-                  Sign In
+                  <i class="fas fa-sign-in-alt"></i>
+                  Log In
                 </button>
               }
             </div>

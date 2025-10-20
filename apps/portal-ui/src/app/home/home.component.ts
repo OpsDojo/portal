@@ -21,13 +21,25 @@ import { Forecast } from '../../forecasts/forecast.model';
               <h1 class="text-2xl font-bold text-gray-800">Portal Dashboard</h1>
               <p class="text-gray-600">Welcome back!</p>
             </div>
-            <button
-              type="button"
-              (click)="logout()"
-              class="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors"
-            >
-              Log out
-            </button>
+            <div class="flex gap-3">
+              <button
+                type="button"
+                class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 flex items-center gap-2"
+                title="Settings"
+              >
+                <i class="fas fa-cog"></i>
+                Settings
+              </button>
+              <button
+                type="button"
+                (click)="logout()"
+                class="bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 flex items-center gap-2"
+                title="Log Out"
+              >
+                <i class="fas fa-sign-out-alt"></i>
+                Log Out
+              </button>
+            </div>
           </div>
         </div>
 
