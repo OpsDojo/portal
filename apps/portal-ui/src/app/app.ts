@@ -1,8 +1,9 @@
-import { AfterViewInit, Component, OnDestroy, signal } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, signal, inject, effect } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
 import { SpaConfig } from '../config/spa-config.model';
 import { MsalAppService } from '../config/msal.service';
+import { ThemeService } from './config/theme.service';
 
 @Component({
   selector: 'app-root',
@@ -11,39 +12,25 @@ import { MsalAppService } from '../config/msal.service';
   styleUrl: './app.scss',
 })
 export class App implements AfterViewInit, OnDestroy {
-  theme: 'light' | 'dark' = 'light';
+  themeService = inject(ThemeService);
 
-  ngOnInit() {
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'dark' || savedTheme === 'light') {
-      this.theme = savedTheme as 'light' | 'dark';
-      this.applyTheme();
-    }
-    window.addEventListener('themeChange', (event: any) => {
-      if (event.detail === 'dark' || event.detail === 'light') {
-        this.theme = event.detail;
-        localStorage.setItem('theme', this.theme);
-        this.applyTheme();
+  constructor(
+    public msal: MsalAppService,
+    public readonly spaConfig: SpaConfig
+  ) {
+    effect(() => {
+      const theme = this.themeService.theme();
+      const appRoot = document.documentElement;
+      if (theme === 'dark') {
+        appRoot.classList.add('dark');
+      } else {
+        appRoot.classList.remove('dark');
       }
     });
   }
 
-  applyTheme(): void {
-    const appRoot = document.documentElement;
-    if (this.theme === 'dark') {
-      appRoot.classList.add('dark');
-    } else {
-      appRoot.classList.remove('dark');
-    }
-  }
-  constructor(
-    public msal: MsalAppService,
-    public readonly spaConfig: SpaConfig
-  ) {}
-
   ngAfterViewInit() {
     this.msal.init();
-    this.ngOnInit();
   }
 
   ngOnDestroy() {

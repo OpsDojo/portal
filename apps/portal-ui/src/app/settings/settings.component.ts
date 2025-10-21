@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { MsalAppService } from '../../config/msal.service';
+import { ThemeService } from '../config/theme.service';
 
 @Component({
   selector: 'app-settings',
@@ -277,34 +278,27 @@ import { MsalAppService } from '../../config/msal.service';
 })
 export class SettingsComponent {
   activeTab: 'profile' | 'notifications' | 'appearance' | 'security' = 'profile';
-  theme: 'light' | 'dark' = 'light';
+  themeService: ThemeService = inject(ThemeService);
 
   ngOnInit(): void {
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme === 'dark' || savedTheme === 'light') {
-      this.theme = savedTheme as 'light' | 'dark';
+      this.setTheme(savedTheme as 'light' | 'dark');
     }
   }
 
+  get theme() {
+    return this.themeService.theme();
+  }
+
   setTheme(theme: 'light' | 'dark'): void {
-    this.theme = theme;
-    localStorage.setItem('theme', theme);
-    window.dispatchEvent(new CustomEvent('themeChange', { detail: theme }));
+    this.themeService.setTheme(theme);
   }
 
   constructor(
     public msal: MsalAppService,
     private router: Router
-  ) {
-    // For SSR safety, only run theme logic in browser
-    if (typeof window !== 'undefined') {
-      const savedTheme = localStorage.getItem('theme');
-      if (savedTheme === 'dark' || savedTheme === 'light') {
-        this.theme = savedTheme as 'light' | 'dark';
-        this.setTheme(this.theme);
-      }
-    }
-  }
+  ) {}
 
   get userDisplayName(): string {
     return this.msal.authService.instance.getActiveAccount()?.name || 'Not available';
