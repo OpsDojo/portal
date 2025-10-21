@@ -9,31 +9,21 @@ import { ThemeService } from '../config/theme.service';
   standalone: true,
   imports: [CommonModule],
   template: `
-    <main class="min-h-screen bg-gray-50 p-6">
+    <main class="section">
       <div class="max-w-4xl mx-auto">
         <!-- Header -->
-        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
-          <div class="flex justify-between items-center">
+        <div class="card">
+          <div class="header">
             <div>
-              <h1 class="text-2xl font-bold text-gray-800">Settings</h1>
-              <p class="text-gray-600">Manage your account and application preferences</p>
+              <h1 class="title">Settings</h1>
+              <p class="subtitle">Manage your account and application preferences</p>
             </div>
             <div class="flex gap-3">
-              <button
-                type="button"
-                (click)="goBack()"
-                class="bg-gray-600 hover:bg-gray-700 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 flex items-center gap-2"
-                title="Go Back"
-              >
+              <button type="button" (click)="goBack()" class="btn btn-back" title="Go Back">
                 <i class="fas fa-arrow-left"></i>
                 Back
               </button>
-              <button
-                type="button"
-                (click)="logout()"
-                class="bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 flex items-center gap-2"
-                title="Log Out"
-              >
+              <button type="button" (click)="logout()" class="btn btn-logout" title="Log Out">
                 <i class="fas fa-sign-out-alt"></i>
                 Log Out
               </button>
@@ -44,17 +34,14 @@ import { ThemeService } from '../config/theme.service';
         <div class="grid gap-6 lg:grid-cols-3">
           <!-- Settings Navigation -->
           <div class="lg:col-span-1">
-            <div class="bg-white rounded-lg shadow-lg p-6">
-              <h2 class="text-lg font-semibold text-gray-800 mb-4">Categories</h2>
-              <nav class="space-y-2">
+            <div class="card">
+              <h2 class="text-lg font-semibold text-text mb-4">Categories</h2>
+              <nav class="nav">
                 <button
                   (click)="activeTab = 'profile'"
                   [class]="
-                    activeTab === 'profile'
-                      ? 'bg-blue-50 text-blue-600 border-blue-200'
-                      : 'text-gray-600 hover:bg-gray-50'
+                    activeTab === 'profile' ? 'nav-btn nav-btn-active' : 'nav-btn nav-btn-inactive'
                   "
-                  class="w-full text-left px-4 py-3 rounded-lg border transition-all duration-200 flex items-center gap-3"
                 >
                   <i class="fas fa-user"></i>
                   Profile
@@ -63,10 +50,9 @@ import { ThemeService } from '../config/theme.service';
                   (click)="activeTab = 'notifications'"
                   [class]="
                     activeTab === 'notifications'
-                      ? 'bg-blue-50 text-blue-600 border-blue-200'
-                      : 'text-gray-600 hover:bg-gray-50'
+                      ? 'nav-btn nav-btn-active'
+                      : 'nav-btn nav-btn-inactive'
                   "
-                  class="w-full text-left px-4 py-3 rounded-lg border transition-all duration-200 flex items-center gap-3"
                 >
                   <i class="fas fa-bell"></i>
                   Notifications
@@ -75,10 +61,9 @@ import { ThemeService } from '../config/theme.service';
                   (click)="activeTab = 'appearance'"
                   [class]="
                     activeTab === 'appearance'
-                      ? 'bg-blue-50 text-blue-600 border-blue-200'
-                      : 'text-gray-600 hover:bg-gray-50'
+                      ? 'nav-btn nav-btn-active'
+                      : 'nav-btn nav-btn-inactive'
                   "
-                  class="w-full text-left px-4 py-3 rounded-lg border transition-all duration-200 flex items-center gap-3"
                 >
                   <i class="fas fa-palette"></i>
                   Appearance
@@ -86,11 +71,8 @@ import { ThemeService } from '../config/theme.service';
                 <button
                   (click)="activeTab = 'security'"
                   [class]="
-                    activeTab === 'security'
-                      ? 'bg-blue-50 text-blue-600 border-blue-200'
-                      : 'text-gray-600 hover:bg-gray-50'
+                    activeTab === 'security' ? 'nav-btn nav-btn-active' : 'nav-btn nav-btn-inactive'
                   "
-                  class="w-full text-left px-4 py-3 rounded-lg border transition-all duration-200 flex items-center gap-3"
                 >
                   <i class="fas fa-shield-alt"></i>
                   Security
@@ -101,52 +83,40 @@ import { ThemeService } from '../config/theme.service';
 
           <!-- Settings Content -->
           <div class="lg:col-span-2">
-            <div class="bg-white rounded-lg shadow-lg p-6">
+            <div class="card">
               @switch (activeTab) {
                 @case ('profile') {
                   <div>
-                    <h3 class="text-xl font-semibold text-gray-800 mb-3">Profile Settings</h3>
-                    <p class="text-sm text-gray-500 mb-6">
+                    <h3 class="title mb-3">Profile Settings</h3>
+                    <p class="subtitle mb-6">
                       These details are fetched from your identity provider.
                     </p>
                     <div class="space-y-4">
                       <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2"
-                          >Display Name</label
-                        >
+                        <label class="input-label">Display Name</label>
                         <input
                           type="text"
-                          class="w-full px-4 py-3 text-gray-500 border border-gray-300 rounded-lg bg-gray-100"
+                          class="input"
                           [value]="userDisplayName"
                           readonly
                           disabled
                         />
                       </div>
                       <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
-                        <input
-                          type="email"
-                          class="w-full px-4 py-3 text-gray-500 border border-gray-300 rounded-lg bg-gray-100"
-                          [value]="userEmail"
-                          readonly
-                          disabled
-                        />
+                        <label class="input-label">Email</label>
+                        <input type="email" class="input" [value]="userEmail" readonly disabled />
                       </div>
                     </div>
                   </div>
                 }
                 @case ('notifications') {
                   <div>
-                    <h3 class="text-xl font-semibold text-gray-800 mb-6">
-                      Notification Preferences
-                    </h3>
+                    <h3 class="title mb-6">Notification Preferences</h3>
                     <div class="space-y-4">
                       <div class="flex items-center justify-between p-4 border rounded-lg">
                         <div>
-                          <h4 class="font-medium text-gray-800">Email Notifications</h4>
-                          <p class="text-sm text-gray-600">
-                            Receive email updates about important events
-                          </p>
+                          <h4 class="input-label">Email Notifications</h4>
+                          <p class="subtitle">Receive email updates about important events</p>
                         </div>
                         <label class="relative inline-flex items-center cursor-pointer">
                           <input type="checkbox" class="sr-only peer" checked />
@@ -157,8 +127,8 @@ import { ThemeService } from '../config/theme.service';
                       </div>
                       <div class="flex items-center justify-between p-4 border rounded-lg">
                         <div>
-                          <h4 class="font-medium text-gray-800">Browser Notifications</h4>
-                          <p class="text-sm text-gray-600">Show notifications in your browser</p>
+                          <h4 class="input-label">Browser Notifications</h4>
+                          <p class="subtitle">Show notifications in your browser</p>
                         </div>
                         <label class="relative inline-flex items-center cursor-pointer">
                           <input type="checkbox" class="sr-only peer" />
@@ -172,10 +142,10 @@ import { ThemeService } from '../config/theme.service';
                 }
                 @case ('appearance') {
                   <div>
-                    <h3 class="text-xl font-semibold text-gray-800 mb-6">Appearance Settings</h3>
+                    <h3 class="title mb-6">Appearance Settings</h3>
                     <div class="space-y-6">
                       <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-3">Theme</label>
+                        <label class="input-label mb-3">Theme</label>
                         <div class="grid grid-cols-2 gap-4">
                           <div
                             class="border-2 rounded-lg p-4 cursor-pointer flex flex-col gap-2"
@@ -195,7 +165,7 @@ import { ThemeService } from '../config/theme.service';
                                   [class.bg-blue-500]="theme === 'light'"
                                 ></div>
                               </div>
-                              <span class="font-medium">Light</span>
+                              <span class="input-label">Light</span>
                               <span *ngIf="theme === 'light'" class="ml-2 text-xs text-blue-500"
                                 >Selected</span
                               >
@@ -222,7 +192,7 @@ import { ThemeService } from '../config/theme.service';
                                   [class.bg-blue-500]="theme === 'dark'"
                                 ></div>
                               </div>
-                              <span class="font-medium">Dark</span>
+                              <span class="input-label">Dark</span>
                               <span *ngIf="theme === 'dark'" class="ml-2 text-xs text-blue-500"
                                 >Selected</span
                               >
@@ -238,21 +208,25 @@ import { ThemeService } from '../config/theme.service';
                 }
                 @case ('security') {
                   <div>
-                    <h3 class="text-xl font-semibold text-gray-800 mb-6">Security Settings</h3>
+                    <h3 class="title mb-6">Security Settings</h3>
                     <div class="space-y-6">
-                      <div class="p-4 bg-green-50 border border-green-200 rounded-lg">
+                      <div
+                        class="p-4 bg-green-50 dark:bg-green-900 border border-green-200 dark:border-green-700 rounded-lg"
+                      >
                         <div class="flex items-center gap-3">
-                          <i class="fas fa-shield-alt text-green-600"></i>
+                          <i class="fas fa-shield-alt text-green-600 dark:text-green-300"></i>
                           <div>
-                            <h4 class="font-medium text-green-800">Microsoft Authentication</h4>
-                            <p class="text-sm text-green-700">
+                            <h4 class="font-medium text-green-800 dark:text-green-200">
+                              Microsoft Authentication
+                            </h4>
+                            <p class="text-sm text-green-700 dark:text-green-100">
                               Your account is secured with Microsoft SSO
                             </p>
                           </div>
                         </div>
                       </div>
                       <div>
-                        <h4 class="font-medium text-gray-800 mb-3">Session Management</h4>
+                        <h4 class="input-label mb-3">Session Management</h4>
                         <button
                           type="button"
                           class="bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-lg transition-all duration-200"
@@ -260,9 +234,7 @@ import { ThemeService } from '../config/theme.service';
                         >
                           Sign Out of All Devices
                         </button>
-                        <p class="text-sm text-gray-600 mt-2">
-                          This will sign you out of all active sessions
-                        </p>
+                        <p class="subtitle mt-2">This will sign you out of all active sessions</p>
                       </div>
                     </div>
                   </div>

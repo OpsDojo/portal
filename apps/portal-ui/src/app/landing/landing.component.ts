@@ -7,23 +7,21 @@ import { MsalAppService } from '../../config/msal.service';
   standalone: true,
   imports: [RouterLink],
   template: `
-    <div class="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
+    <div class="section">
       <!-- Hero Section -->
       <div class="relative overflow-hidden">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div class="max-w-7xl mx-auto py-16">
           <div class="text-center">
             <!-- Logo/Brand -->
             <div class="mb-8">
-              <h1 class="text-5xl font-bold text-gray-900 mb-4">
-                <span class="text-blue-600">Ops</span>Dojo Portal
-              </h1>
-              <p class="text-xl text-gray-600">Your gateway to operational excellence</p>
+              <h1 class="title mb-4"><span style="color: var(--primary)">Ops</span>Dojo Portal</h1>
+              <p class="subtitle">Your gateway to operational excellence</p>
             </div>
 
             <!-- Hero Content -->
             <div class="max-w-3xl mx-auto mb-12">
-              <h2 class="text-3xl font-bold text-gray-800 mb-6">Streamline Your Operations</h2>
-              <p class="text-lg text-gray-600 mb-8">
+              <h2 class="title mb-6">Streamline Your Operations</h2>
+              <p class="subtitle mb-8">
                 Access powerful tools, real-time insights, and collaborative features designed to
                 optimize your workflow and boost productivity.
               </p>
@@ -31,30 +29,18 @@ import { MsalAppService } from '../../config/msal.service';
 
             <!-- CTA Buttons -->
             <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <a
-                routerLink="/dashboard"
-                class="bg-white hover:bg-gray-50 text-blue-600 border-2 border-blue-600 hover:border-blue-700 font-semibold py-3 px-8 rounded-lg transition-all duration-200 flex items-center gap-2"
-                title="Go to Dashboard"
-              >
+              <a routerLink="/dashboard" class="btn btn-primary" title="Go to Dashboard">
                 <i class="fas fa-tachometer-alt"></i>
                 Dashboard
               </a>
 
               @if (msal.loginDisplay) {
-                <button
-                  (click)="msal.logout()"
-                  class="bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-8 rounded-lg transition-all duration-200 flex items-center gap-2"
-                  title="Log Out"
-                >
+                <button (click)="msal.logout()" class="btn btn-logout" title="Log Out">
                   <i class="fas fa-sign-out-alt"></i>
                   Log Out
                 </button>
               } @else {
-                <button
-                  (click)="msal.login()"
-                  class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-lg transition-all duration-200 flex items-center gap-2"
-                  title="Log In"
-                >
+                <button (click)="msal.login()" class="btn btn-primary" title="Log In">
                   <i class="fas fa-sign-in-alt"></i>
                   Log In
                 </button>
@@ -65,23 +51,25 @@ import { MsalAppService } from '../../config/msal.service';
       </div>
 
       <!-- Features Section -->
-      <div class="py-16 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="py-16">
+        <div class="max-w-7xl mx-auto">
           <div class="text-center mb-12">
-            <h3 class="text-2xl font-bold text-gray-900 mb-4">Why Choose OpsDojo?</h3>
-            <p class="text-gray-600">Everything you need to manage your operations efficiently</p>
+            <h3 class="title mb-4">Why Choose OpsDojo?</h3>
+            <p class="subtitle">Everything you need to manage your operations efficiently</p>
           </div>
 
           <div class="grid md:grid-cols-3 gap-8">
-            <div class="text-center p-6">
+            <div class="card text-center p-6">
               <div
-                class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-4"
+                class="w-12 h-12 rounded-lg flex items-center justify-center mx-auto mb-4"
+                style="background: var(--primary);"
               >
                 <svg
-                  class="w-6 h-6 text-blue-600"
+                  class="w-6 h-6"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
+                  style="color: #fff;"
                 >
                   <path
                     stroke-linecap="round"
@@ -91,19 +79,21 @@ import { MsalAppService } from '../../config/msal.service';
                   ></path>
                 </svg>
               </div>
-              <h4 class="text-lg font-semibold text-gray-900 mb-2">Real-time Analytics</h4>
-              <p class="text-gray-600">Monitor your operations with live data and insights</p>
+              <h4 class="input-label mb-2">Real-time Analytics</h4>
+              <p class="subtitle">Monitor your operations with live data and insights</p>
             </div>
 
-            <div class="text-center p-6">
+            <div class="card text-center p-6">
               <div
-                class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mx-auto mb-4"
+                class="w-12 h-12 rounded-lg flex items-center justify-center mx-auto mb-4"
+                style="background: #22c55e;"
               >
                 <svg
-                  class="w-6 h-6 text-green-600"
+                  class="w-6 h-6"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
+                  style="color: #fff;"
                 >
                   <path
                     stroke-linecap="round"
@@ -113,19 +103,21 @@ import { MsalAppService } from '../../config/msal.service';
                   ></path>
                 </svg>
               </div>
-              <h4 class="text-lg font-semibold text-gray-900 mb-2">Secure Access</h4>
-              <p class="text-gray-600">Enterprise-grade security with Microsoft authentication</p>
+              <h4 class="input-label mb-2">Secure Access</h4>
+              <p class="subtitle">Enterprise-grade security with Microsoft authentication</p>
             </div>
 
-            <div class="text-center p-6">
+            <div class="card text-center p-6">
               <div
-                class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mx-auto mb-4"
+                class="w-12 h-12 rounded-lg flex items-center justify-center mx-auto mb-4"
+                style="background: #a78bfa;"
               >
                 <svg
-                  class="w-6 h-6 text-purple-600"
+                  class="w-6 h-6"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
+                  style="color: #fff;"
                 >
                   <path
                     stroke-linecap="round"
@@ -135,19 +127,17 @@ import { MsalAppService } from '../../config/msal.service';
                   ></path>
                 </svg>
               </div>
-              <h4 class="text-lg font-semibold text-gray-900 mb-2">Lightning Fast</h4>
-              <p class="text-gray-600">Optimized performance for seamless user experience</p>
+              <h4 class="input-label mb-2">Lightning Fast</h4>
+              <p class="subtitle">Optimized performance for seamless user experience</p>
             </div>
           </div>
         </div>
       </div>
 
       <!-- Footer -->
-      <div class="bg-gray-50 py-8">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <p class="text-gray-500">
-            © 2025 OpsDojo. Built with Angular and modern web technologies.
-          </p>
+      <div class="section py-8">
+        <div class="max-w-7xl mx-auto text-center">
+          <p class="subtitle">© 2025 OpsDojo. Built with Angular and modern web technologies.</p>
         </div>
       </div>
     </div>
