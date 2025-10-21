@@ -1,56 +1,3 @@
-/* --- Semantic Design System --- */
-.card {
-  @apply rounded-lg shadow-lg p-6 mb-6 bg-bg text-text;
-}
-
-.section {
-  @apply min-h-screen p-6 bg-bg text-text;
-}
-
-.header {
-  @apply flex justify-between items-center mb-6;
-}
-
-.title {
-  @apply text-2xl font-bold text-text;
-}
-
-.subtitle {
-  @apply text-gray-600 text-base;
-}
-
-.btn {
-  @apply font-semibold py-3 px-6 rounded-lg transition-all duration-200 flex items-center gap-2;
-}
-.btn-back {
-  @apply bg-gray-600 hover:bg-gray-700 text-white;
-}
-.btn-logout {
-  @apply bg-red-600 hover:bg-red-700 text-white;
-}
-.btn-primary {
-  @apply bg-blue-600 hover:bg-blue-700 text-white;
-}
-
-.input {
-  @apply w-full px-4 py-3 border border-gray-300 rounded-lg bg-bg text-text;
-}
-.input-label {
-  @apply block text-sm font-medium text-text mb-2;
-}
-
-.nav {
-  @apply space-y-2;
-}
-.nav-btn {
-  @apply w-full text-left px-4 py-3 rounded-lg border transition-all duration-200 flex items-center gap-3;
-}
-.nav-btn-active {
-  @apply bg-blue-50 text-blue-600 border-blue-200;
-}
-.nav-btn-inactive {
-  @apply text-gray-600 hover:bg-gray-50;
-}
 /* =============================
    Tailwind Base & Utilities
 ============================= */
@@ -162,8 +109,3 @@ body {
   color: var(--secondary);
   background-color: transparent;
 }
-
-/* =============================
-   Utility Overrides (if needed)
-============================= */
-// Add any overrides for third-party or legacy classes here
