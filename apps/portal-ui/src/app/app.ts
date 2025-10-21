@@ -9,7 +9,6 @@ import { ThemeService } from './config/theme.service';
   selector: 'app-root',
   imports: [RouterOutlet],
   templateUrl: './app.html',
-  styleUrl: './app.scss',
 })
 export class App implements AfterViewInit, OnDestroy {
   themeService = inject(ThemeService);
