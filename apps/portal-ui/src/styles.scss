@@ -1,3 +1,111 @@
+/* =============================
+   Tailwind Base & Utilities
+============================= */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* =============================
+   CSS Variables & Dark Mode
+============================= */
+:root {
+  --bg: #f9fafb;
+  --text: #222;
+  --primary: #2563eb;
+  --secondary: #64748b;
+  --border: #e5e7eb;
+  --card: #fff;
+  --input-bg: #f3f4f6;
+}
+
+.dark {
+  --bg: #18181b;
+  --text: #fafafa;
+  --primary: #60a5fa;
+  --secondary: #94a3b8;
+  --border: #27272a;
+  --card: #232326;
+  --input-bg: #232326;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+}
+
+/* =============================
+   Semantic Component Classes
+============================= */
+.section {
+  @apply p-6;
+  background-color: var(--bg);
+  color: var(--text);
+}
+
+.card {
+  @apply rounded-lg shadow-lg p-6 mb-6;
+  background-color: var(--card);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+.header {
+  @apply flex justify-between items-center mb-6;
+}
+
+.title {
+  @apply text-2xl font-bold;
+  color: var(--text);
+}
+
+.subtitle {
+  @apply text-base;
+  color: var(--secondary);
+}
+
+.btn {
+  @apply font-semibold py-3 px-6 rounded-lg transition-all duration-200 flex items-center gap-2;
+  border: none;
+}
+.btn-back {
+  @apply bg-gray-600 hover:bg-gray-700 text-white;
+}
+.btn-logout {
+  @apply bg-red-600 hover:bg-red-700 text-white;
+}
+.btn-primary {
+  background-color: var(--primary);
+  color: #fff;
+}
+.btn-secondary {
+  background-color: var(--secondary);
+  color: #fff;
+}
+
+.input {
+  @apply w-full px-4 py-3 border rounded-lg;
+  background-color: var(--input-bg);
+  color: var(--text);
+  border-color: var(--border);
+}
+.input-label {
+  @apply block text-sm font-medium mb-2;
+  color: var(--text);
+}
+
+.nav {
+  @apply space-y-2;
+}
+.nav-btn {
+  @apply w-full text-left px-4 py-3 rounded-lg border transition-all duration-200 flex items-center gap-3;
+  border-color: var(--border);
+}
+.nav-btn-active {
+  background-color: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+}
+.nav-btn-inactive {
+  color: var(--secondary);
+  background-color: transparent;
+}

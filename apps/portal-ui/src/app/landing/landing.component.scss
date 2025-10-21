@@ -1,0 +1,14 @@
+.landing-bg {
+  background: url('/assets/opsdojo.png') center/cover no-repeat;
+  opacity: 0.15;
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+.dark .landing-bg {
+  opacity: 0.25;
+}
+.section {
+  position: relative;
+}

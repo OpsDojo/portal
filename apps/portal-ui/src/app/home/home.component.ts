@@ -12,31 +12,26 @@ import { Forecast } from '../../forecasts/forecast.model';
   standalone: true,
   imports: [CommonModule],
   template: `
-    <main class="min-h-screen bg-gray-50 p-6">
+    <main class="section">
       <div class="max-w-4xl mx-auto">
         <!-- Header -->
-        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
-          <div class="flex justify-between items-center">
+        <div class="card">
+          <div class="header">
             <div>
-              <h1 class="text-2xl font-bold text-gray-800">Portal Dashboard</h1>
-              <p class="text-gray-600">Welcome back!</p>
+              <h1 class="title">Portal Dashboard</h1>
+              <p class="subtitle">Welcome back!</p>
             </div>
             <div class="flex gap-3">
               <button
                 type="button"
                 (click)="goToSettings()"
-                class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 flex items-center gap-2"
+                class="btn btn-primary"
                 title="Settings"
               >
                 <i class="fas fa-cog"></i>
                 Settings
               </button>
-              <button
-                type="button"
-                (click)="logout()"
-                class="bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 flex items-center gap-2"
-                title="Log Out"
-              >
+              <button type="button" (click)="logout()" class="btn btn-logout" title="Log Out">
                 <i class="fas fa-sign-out-alt"></i>
                 Log Out
               </button>
@@ -45,23 +40,21 @@ import { Forecast } from '../../forecasts/forecast.model';
         </div>
 
         <!-- Forecast Section -->
-        <div class="bg-white rounded-lg shadow-lg p-6">
-          <h2 class="text-xl font-bold text-gray-800 mb-4">Weather Forecast</h2>
+        <div class="card">
+          <h2 class="title mb-4">Weather Forecast</h2>
 
           @if ($forecast | async; as forecasts) {
             <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
               @for (f of forecasts; track f.date) {
-                <div
-                  class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-4 border border-blue-100"
-                >
+                <div class="card p-4">
                   <div class="flex justify-between items-center">
                     <div>
-                      <p class="text-sm text-gray-600">{{ f.date | date: 'mediumDate' }}</p>
-                      <p class="text-2xl font-bold text-gray-800">{{ f.temperatureC }}°C</p>
-                      <p class="text-sm text-gray-500">{{ f.temperatureF }}°F</p>
+                      <p class="subtitle">{{ f.date | date: 'mediumDate' }}</p>
+                      <p class="title">{{ f.temperatureC }}°C</p>
+                      <p class="subtitle">{{ f.temperatureF }}°F</p>
                     </div>
                     <div class="text-right">
-                      <p class="text-lg font-semibold text-blue-600">{{ f.summary }}</p>
+                      <p class="input-label">{{ f.summary }}</p>
                     </div>
                   </div>
                 </div>
@@ -72,7 +65,7 @@ import { Forecast } from '../../forecasts/forecast.model';
               <div
                 class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-4"
               ></div>
-              <p class="text-gray-600">Loading forecast...</p>
+              <p class="subtitle">Loading forecast...</p>
             </div>
           }
         </div>
