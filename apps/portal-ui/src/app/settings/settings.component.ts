@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { MsalAppService } from '../../config/msal.service';
 
 @Component({
   selector: 'app-settings',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   template: `
     <main class="min-h-screen bg-gray-50 p-6">
       <div class="max-w-4xl mx-auto">
@@ -103,34 +104,32 @@ import { MsalAppService } from '../../config/msal.service';
               @switch (activeTab) {
                 @case ('profile') {
                   <div>
-                    <h3 class="text-xl font-semibold text-gray-800 mb-6">Profile Settings</h3>
-                    <div class="space-y-6">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3">Profile Settings</h3>
+                    <p class="text-sm text-gray-500 mb-6">
+                      These details are fetched from your identity provider.
+                    </p>
+                    <div class="space-y-4">
                       <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2"
                           >Display Name</label
                         >
                         <input
                           type="text"
-                          class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                          placeholder="Enter your display name"
+                          class="w-full px-4 py-3 text-gray-500 border border-gray-300 rounded-lg bg-gray-100"
                           [value]="userDisplayName"
                           readonly
+                          disabled
                         />
-                        <p class="text-sm text-gray-500 mt-1">
-                          Your display name from Microsoft account
-                        </p>
                       </div>
                       <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
                         <input
                           type="email"
-                          class="w-full px-4 py-3 border border-gray-300 rounded-lg bg-gray-50"
+                          class="w-full px-4 py-3 text-gray-500 border border-gray-300 rounded-lg bg-gray-100"
                           [value]="userEmail"
                           readonly
+                          disabled
                         />
-                        <p class="text-sm text-gray-500 mt-1">
-                          Email address from your Microsoft account
-                        </p>
                       </div>
                     </div>
                   </div>
@@ -177,27 +176,55 @@ import { MsalAppService } from '../../config/msal.service';
                       <div>
                         <label class="block text-sm font-medium text-gray-700 mb-3">Theme</label>
                         <div class="grid grid-cols-2 gap-4">
-                          <div class="border-2 border-blue-500 rounded-lg p-4 cursor-pointer">
+                          <div
+                            class="border-2 rounded-lg p-4 cursor-pointer flex flex-col gap-2"
+                            [class]="
+                              theme === 'light'
+                                ? 'border-blue-500'
+                                : 'border-gray-300 hover:border-gray-400'
+                            "
+                            (click)="setTheme('light')"
+                          >
                             <div class="flex items-center gap-3">
                               <div
                                 class="w-4 h-4 bg-white border-2 border-gray-300 rounded-full flex items-center justify-center"
                               >
-                                <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
+                                <div
+                                  class="w-2 h-2 rounded-full"
+                                  [class.bg-blue-500]="theme === 'light'"
+                                ></div>
                               </div>
                               <span class="font-medium">Light</span>
+                              <span *ngIf="theme === 'light'" class="ml-2 text-xs text-blue-500"
+                                >Selected</span
+                              >
                             </div>
                             <div
                               class="mt-2 h-12 bg-gradient-to-r from-blue-50 to-indigo-50 rounded border"
                             ></div>
                           </div>
                           <div
-                            class="border-2 border-gray-300 rounded-lg p-4 cursor-pointer hover:border-gray-400"
+                            class="border-2 rounded-lg p-4 cursor-pointer flex flex-col gap-2"
+                            [class]="
+                              theme === 'dark'
+                                ? 'border-blue-500'
+                                : 'border-gray-300 hover:border-gray-400'
+                            "
+                            (click)="setTheme('dark')"
                           >
                             <div class="flex items-center gap-3">
                               <div
-                                class="w-4 h-4 bg-white border-2 border-gray-300 rounded-full"
-                              ></div>
+                                class="w-4 h-4 bg-white border-2 border-gray-300 rounded-full flex items-center justify-center"
+                              >
+                                <div
+                                  class="w-2 h-2 rounded-full"
+                                  [class.bg-blue-500]="theme === 'dark'"
+                                ></div>
+                              </div>
                               <span class="font-medium">Dark</span>
+                              <span *ngIf="theme === 'dark'" class="ml-2 text-xs text-blue-500"
+                                >Selected</span
+                              >
                             </div>
                             <div
                               class="mt-2 h-12 bg-gradient-to-r from-gray-800 to-gray-900 rounded border"
@@ -250,11 +277,34 @@ import { MsalAppService } from '../../config/msal.service';
 })
 export class SettingsComponent {
   activeTab: 'profile' | 'notifications' | 'appearance' | 'security' = 'profile';
+  theme: 'light' | 'dark' = 'light';
+
+  ngOnInit(): void {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark' || savedTheme === 'light') {
+      this.theme = savedTheme as 'light' | 'dark';
+    }
+  }
+
+  setTheme(theme: 'light' | 'dark'): void {
+    this.theme = theme;
+    localStorage.setItem('theme', theme);
+    window.dispatchEvent(new CustomEvent('themeChange', { detail: theme }));
+  }
 
   constructor(
     public msal: MsalAppService,
     private router: Router
-  ) {}
+  ) {
+    // For SSR safety, only run theme logic in browser
+    if (typeof window !== 'undefined') {
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme === 'dark' || savedTheme === 'light') {
+        this.theme = savedTheme as 'light' | 'dark';
+        this.setTheme(this.theme);
+      }
+    }
+  }
 
   get userDisplayName(): string {
     return this.msal.authService.instance.getActiveAccount()?.name || 'Not available';
@@ -268,9 +318,9 @@ export class SettingsComponent {
     this.router.navigate(['/dashboard']);
   }
 
-  async logout(): Promise<void> {
+  logout(): void {
     try {
-      await this.msal.logout();
+      this.msal.logout();
       this.router.navigate(['/']);
     } catch (error) {
       console.error('Logout failed:', error);

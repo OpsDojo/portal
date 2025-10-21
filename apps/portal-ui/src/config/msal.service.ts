@@ -159,11 +159,11 @@ export class MsalAppService {
 
   logout() {
     if (this.msalGuardConfig.interactionType === InteractionType.Popup) {
-      this.authService.logoutPopup({
+      return this.authService.logoutPopup({
         mainWindowRedirectUri: '/',
       });
     } else {
-      this.authService.logoutRedirect();
+      return this.authService.logoutRedirect();
     }
   }
 
