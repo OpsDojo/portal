@@ -8,6 +8,7 @@ import { MsalAppService } from '../../config/msal.service';
   imports: [RouterLink],
   template: `
     <div class="section">
+      <div class="landing-bg"></div>
       <!-- Hero Section -->
       <div class="relative overflow-hidden">
         <div class="max-w-7xl mx-auto py-16">
@@ -142,7 +143,7 @@ import { MsalAppService } from '../../config/msal.service';
       </div>
     </div>
   `,
-  styles: [],
+  styleUrls: ['./landing.component.scss'],
 })
 export class LandingComponent {
   constructor(public msal: MsalAppService) {}
