@@ -34,8 +34,15 @@ public enum WeightUnit
 /// </remarks>
 public sealed record Weight(decimal Kg) : IComparable<Weight>
 {
-    private const decimal KilogramsPerPound = 0.45359237m;
-    private const decimal KilogramsPerStone = 6.35029318m;
+    /// <summary>
+    /// The number of kilograms in one pound.
+    /// </summary>
+    public const decimal KgPerPound = 0.45359237m;
+
+    /// <summary>
+    /// The number of kilograms in one stone.
+    /// </summary>
+    public const decimal KgPerStone = 6.35029318m;
 
     /// <summary>
     /// Creates a weight from kilograms.
@@ -49,14 +56,14 @@ public sealed record Weight(decimal Kg) : IComparable<Weight>
     /// </summary>
     /// <param name="lbs">The weight in pounds.</param>
     /// <returns>A new <see cref="Weight"/> instance.</returns>
-    public static Weight FromLbs(decimal lbs) => new(lbs * KilogramsPerPound);
+    public static Weight FromLbs(decimal lbs) => new(lbs * KgPerPound);
 
     /// <summary>
     /// Creates a weight from stone.
     /// </summary>
     /// <param name="stone">The weight in stone.</param>
     /// <returns>A new <see cref="Weight"/> instance.</returns>
-    public static Weight FromStone(decimal stone) => new(stone * KilogramsPerStone);
+    public static Weight FromStone(decimal stone) => new(stone * KgPerStone);
 
     /// <summary>
     /// Creates a weight from a value and unit.
@@ -77,12 +84,12 @@ public sealed record Weight(decimal Kg) : IComparable<Weight>
     /// <summary>
     /// Gets the weight in pounds.
     /// </summary>
-    public decimal Lbs => this.Kg / KilogramsPerPound;
+    public decimal Lbs => this.Kg / KgPerPound;
 
     /// <summary>
     /// Gets the weight in stone.
     /// </summary>
-    public decimal Stone => this.Kg / KilogramsPerStone;
+    public decimal Stone => this.Kg / KgPerStone;
 
     /// <summary>
     /// Adds two weights.

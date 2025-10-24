@@ -8,14 +8,11 @@
 
   <ItemGroup>
     <PackageReference Include="Analyse" Version="1.0.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.10" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Portal.Application\Portal.Application.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="EF\Models\" />
   </ItemGroup>
 
 </Project>
