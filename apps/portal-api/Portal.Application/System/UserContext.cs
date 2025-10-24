@@ -19,12 +19,12 @@ public class UserContext(IHttpContextAccessor httpAccessor, IUserService userSer
 
     private User LoadUser()
     {
-        var email = httpAccessor.HttpContext?.User.FindFirst("email")?.Value;
+        var subject = httpAccessor.HttpContext?.User.FindFirst("sub")?.Value;
         var name = httpAccessor.HttpContext?.User.FindFirst("name")?.Value;
 
-        var user = string.IsNullOrEmpty(email) || string.IsNullOrEmpty(name)
+        var user = string.IsNullOrEmpty(subject)
             ? throw new InvalidOperationException("Unable to determine user claims.")
-            : userService.AddIfMissing(email, name).GetAwaiter().GetResult();
+            : userService.AddIfMissing(subject, name).GetAwaiter().GetResult();
 
         this.appUser = user;
         return user;

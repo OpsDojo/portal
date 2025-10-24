@@ -13,3 +13,6 @@ dotnet_diagnostic.CA2225.severity = none
 
 # SA1206: Declaration keywords should follow order
 dotnet_diagnostic.SA1206.severity = none
+
+# IDE0058: Expression value is never used
+dotnet_diagnostic.IDE0058.severity = none

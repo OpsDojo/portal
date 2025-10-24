@@ -17,12 +17,12 @@ public sealed record User
     /// <summary>
     /// Gets the display name.
     /// </summary>
-    public string DisplayName { get; init; }
+    public string? DisplayName { get; init; }
 
     /// <summary>
-    /// Gets the email address.
+    /// Gets the subject claim.
     /// </summary>
-    public string Email { get; init; }
+    public string Subject { get; init; }
 
     /// <summary>
     /// Gets the joined date.
@@ -32,14 +32,14 @@ public sealed record User
     /// <summary>
     /// Initializes a new instance of the <see cref="User"/> class.
     /// </summary>
+    /// <param name="subject">The claim subject.</param>
     /// <param name="displayName">The display name.</param>
-    /// <param name="email">The email address.</param>
-    /// <param name="entityId">Optional entity ID. If not provided, a new GUID is generated.</param>
+    /// <param name="entityId">Optional entity id. If not provided, a new GUID is generated.</param>
     /// <param name="joined">Optional join date. If not provided, current UTC time is used.</param>
     /// <exception cref="ArgumentException">Thrown if <paramref name="displayName"/> is null or whitespace.</exception>
     public User(
-        string displayName,
-        string email,
+        string subject,
+        string? displayName = null,
         Guid? entityId = null,
         DateTimeOffset? joined = null)
     {
@@ -48,8 +48,8 @@ public sealed record User
             throw new ArgumentException("DisplayName cannot be empty.", nameof(displayName));
         }
 
+        this.Subject = subject;
         this.DisplayName = displayName;
-        this.Email = email;
         this.Id = entityId ?? Guid.NewGuid();
         this.Joined = joined ?? DateTimeOffset.UtcNow;
     }
@@ -59,8 +59,7 @@ public sealed record User
     /// </summary>
     private User()
     {
-        this.DisplayName = default!;
-        this.Email = default!;
+        this.Subject = default!;
     }
 
     /// <summary>

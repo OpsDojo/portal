@@ -10,12 +10,12 @@ using Portal.Domain.Entities;
 public class UserService(IUserRepository userRepo) : IUserService
 {
     /// <inheritdoc/>
-    public async Task<User> AddIfMissing(string email, string displayName, CancellationToken ct = default)
+    public async Task<User> AddIfMissing(string subject, string? displayName, CancellationToken ct = default)
     {
-        var user = await userRepo.GetByEmailAsync(email, ct);
+        var user = await userRepo.GetBySubjectClaim(subject, ct);
         if (user == null)
         {
-            user = new User(displayName, email);
+            user = new User(subject, displayName);
             await userRepo.CreateAsync(user, ct);
         }
 

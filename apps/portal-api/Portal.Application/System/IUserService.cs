@@ -14,9 +14,9 @@ public interface IUserService
     /// <summary>
     /// Adds a user if missing.
     /// </summary>
-    /// <param name="email">The email to look for.</param>
+    /// <param name="subject">The subject to look for.</param>
     /// <param name="displayName">The display name to use if a new user is created.</param>
     /// <param name="ct">The cancellation token.</param>
     /// <returns>A user.</returns>
-    public Task<User> AddIfMissing(string email, string displayName, CancellationToken ct = default);
+    public Task<User> AddIfMissing(string subject, string? displayName, CancellationToken ct = default);
 }
