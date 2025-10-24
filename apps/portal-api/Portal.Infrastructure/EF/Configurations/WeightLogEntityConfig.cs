@@ -35,10 +35,10 @@ public class WeightLogEntityConfig : IEntityTypeConfiguration<WeightLog>
                 .IsRequired();
             weight.Property<decimal>("WeightLbs")
                 .HasColumnType("decimal(10,6)")
-                .HasComputedColumnSql($"[WeightKg] / {Weight.KgPerPound}", stored: true);
+                .HasComputedColumnSql($"CAST([WeightKg] / {Weight.KgPerPound} AS decimal(10,6))", stored: true);
             weight.Property<decimal>("WeightStone")
                 .HasColumnType("decimal(10,6)")
-                .HasComputedColumnSql($"[WeightKg] / {Weight.KgPerStone}", stored: true);
+                .HasComputedColumnSql($"CAST([WeightKg] / {Weight.KgPerStone} AS decimal(10,6))", stored: true);
         });
 
         builder.HasOne(w => w.User)

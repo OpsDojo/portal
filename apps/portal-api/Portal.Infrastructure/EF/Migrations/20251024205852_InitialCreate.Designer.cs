@@ -12,7 +12,7 @@ using Portal.Infrastructure.EF;
 namespace Portal.Infrastructure.EF.Migrations
 {
     [DbContext(typeof(PortalDbContext))]
-    [Migration("20251024202447_InitialCreate")]
+    [Migration("20251024205852_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -95,12 +95,12 @@ namespace Portal.Infrastructure.EF.Migrations
                             b1.Property<decimal>("WeightLbs")
                                 .ValueGeneratedOnAddOrUpdate()
                                 .HasColumnType("decimal(10,6)")
-                                .HasComputedColumnSql("[WeightKg] / 0.45359237", true);
+                                .HasComputedColumnSql("CAST([WeightKg] / 0.45359237 AS decimal(10,6))", true);
 
                             b1.Property<decimal>("WeightStone")
                                 .ValueGeneratedOnAddOrUpdate()
                                 .HasColumnType("decimal(10,6)")
-                                .HasComputedColumnSql("[WeightKg] / 6.35029318", true);
+                                .HasComputedColumnSql("CAST([WeightKg] / 6.35029318 AS decimal(10,6))", true);
 
                             b1.HasKey("WeightLogId");
 
