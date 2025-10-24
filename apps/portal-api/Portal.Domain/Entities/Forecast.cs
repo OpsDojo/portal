@@ -2,7 +2,7 @@
 // Copyright (c) ne1410s. All rights reserved.
 // </copyright>
 
-namespace Portal.Domain.Weather;
+namespace Portal.Domain.Entities;
 
 /// <summary>
 /// The weather forecast.

@@ -4,8 +4,7 @@
 
 namespace Portal.Application.Weather;
 
-using System.Collections.Generic;
-using Portal.Domain.Weather;
+using Portal.Domain.Entities;
 
 /// <inheritdoc cref="IForecastService"/>
 public class ForecastService(IForecastRepo forecastRepo) : IForecastService

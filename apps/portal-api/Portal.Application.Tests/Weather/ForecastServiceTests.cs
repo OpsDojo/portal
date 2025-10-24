@@ -5,7 +5,7 @@
 namespace Portal.Application.Tests.Weather;
 
 using Portal.Application.Weather;
-using Portal.Domain.Weather;
+using Portal.Domain.Entities;
 
 public class ForecastServiceTests
 {

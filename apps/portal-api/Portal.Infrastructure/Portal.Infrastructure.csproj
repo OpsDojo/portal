@@ -14,4 +14,10 @@
     <ProjectReference Include="..\Portal.Application\Portal.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="EF\Models\" />
+    <Folder Include="EF\" />
+    <Folder Include="EF\Repositories\" />
+  </ItemGroup>
+
 </Project>
