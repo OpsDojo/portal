@@ -3,6 +3,31 @@
 # SA1200: Using directives should be placed correctly
 dotnet_diagnostic.SA1200.severity = none
 
+
+[**/Migrations/*.cs]
+
+# CA1062: Validate arguments of public methods
+dotnet_diagnostic.CA1062.severity = none
+
+# CA1861: Avoid constant arrays as arguments
+dotnet_diagnostic.CA1861.severity = none
+
+# SA1200: Using directives should be placed correctly
+dotnet_diagnostic.SA1200.severity = none
+
+# SA1413: Use trailing comma in multi-line initializers
+dotnet_diagnostic.SA1413.severity = none
+
+# SA1633: File should have header
+dotnet_diagnostic.SA1633.severity = none
+
+# IDE0005: Using directive is unnecessary.
+dotnet_diagnostic.IDE0005.severity = none
+
+# RCS0056: A line is too long
+dotnet_diagnostic.RCS0056.severity = none
+
+
 [*.cs]
 
 # CA1515: Consider making public types internal
