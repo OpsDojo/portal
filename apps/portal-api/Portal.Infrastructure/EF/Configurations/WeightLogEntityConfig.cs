@@ -33,11 +33,11 @@ public class WeightLogEntityConfig : IEntityTypeConfiguration<WeightLog>
                 .HasColumnName("WeightKg")
                 .HasColumnType("decimal(10,6)")
                 .IsRequired();
-            weight.Property(wt => wt.Lbs)
-                .HasColumnName("WeightLbs")
+            weight.Property<decimal>("WeightLbs")
+                .HasColumnType("decimal(10,6)")
                 .HasComputedColumnSql($"[WeightKg] / {Weight.KgPerPound}", stored: true);
-            weight.Property(wt => wt.Stone)
-                .HasColumnName("WeightStone")
+            weight.Property<decimal>("WeightStone")
+                .HasColumnType("decimal(10,6)")
                 .HasComputedColumnSql($"[WeightKg] / {Weight.KgPerStone}", stored: true);
         });
 
