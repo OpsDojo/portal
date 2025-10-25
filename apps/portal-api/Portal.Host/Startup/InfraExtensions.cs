@@ -13,7 +13,7 @@ using Portal.Infrastructure.EF;
 public static class InfraExtensions
 {
     /// <summary>
-    /// Adds the system feature.
+    /// Adds the system infrastructure.
     /// </summary>
     /// <param name="services">The service collection.</param>
     /// <param name="config">The configuration.</param>

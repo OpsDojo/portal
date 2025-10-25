@@ -97,7 +97,7 @@ public sealed record Weight(decimal Kg) : IComparable<Weight>
     /// <param name="left">The first weight.</param>
     /// <param name="right">The second weight.</param>
     /// <returns>The sum of the two weights.</returns>
-    public static Weight operator +(Weight left, Weight right) => FromKg(left?.Kg ?? 0 + right?.Kg ?? 0);
+    public static Weight operator +(Weight left, Weight right) => FromKg((left?.Kg ?? 0) + (right?.Kg ?? 0));
 
     /// <summary>
     /// Subtracts one weight from another.
@@ -105,7 +105,7 @@ public sealed record Weight(decimal Kg) : IComparable<Weight>
     /// <param name="left">The first weight.</param>
     /// <param name="right">The second weight.</param>
     /// <returns>The difference between the two weights.</returns>
-    public static Weight operator -(Weight left, Weight right) => FromKg(left?.Kg ?? 0 - right?.Kg ?? 0);
+    public static Weight operator -(Weight left, Weight right) => FromKg((left?.Kg ?? 0) - (right?.Kg ?? 0));
 
     /// <summary>
     /// Compares two weights.

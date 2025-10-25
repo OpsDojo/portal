@@ -4,6 +4,8 @@
 
 namespace Portal.Domain.Entities;
 
+using System.Diagnostics.CodeAnalysis;
+
 /// <summary>
 /// A user entity.
 /// </summary>
@@ -36,7 +38,7 @@ public sealed record User
     /// <param name="displayName">The display name.</param>
     /// <param name="entityId">Optional entity id. If not provided, a new GUID is generated.</param>
     /// <param name="joined">Optional join date. If not provided, current UTC time is used.</param>
-    /// <exception cref="ArgumentException">Thrown if <paramref name="displayName"/> is null or whitespace.</exception>
+    /// <exception cref="ArgumentException">Thrown if <paramref name="subject"/> is null or whitespace.</exception>
     public User(
         string subject,
         string? displayName = null,
@@ -68,15 +70,10 @@ public sealed record User
     /// <param name="newName">The new display name.</param>
     /// <returns>A new <see cref="User"/> instance with updated display name.</returns>
     /// <exception cref="ArgumentException">Thrown if <paramref name="newName"/> is null or whitespace.</exception>
+    [SuppressMessage(
+        "StyleCop.CSharp.ReadabilityRules",
+        "SA1101:Prefix local calls with this",
+        Justification = "StyleCop bug")]
     public User ChangeDisplayName(string newName)
-    {
-        if (string.IsNullOrWhiteSpace(newName))
-        {
-            throw new ArgumentException("DisplayName cannot be empty.", nameof(newName));
-        }
-
-#pragma warning disable SA1101 // Prefix local calls with this
-        return this with { DisplayName = newName };
-#pragma warning restore SA1101 // Prefix local calls with this
-    }
+        => this with { DisplayName = newName };
 }
