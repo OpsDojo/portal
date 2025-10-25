@@ -12,21 +12,19 @@ public class UserContext(IHttpContextAccessor httpAccessor, IUserService userSer
 {
     private User? appUser;
 
-    /// <summary>
-    /// Gets the current application user.
-    /// </summary>
-    public User AppUser => this.appUser ??= this.LoadUser();
-
-    private User LoadUser()
+    /// <inheritdoc/>
+    public async Task<User> GetUserAsync(CancellationToken ct = default)
     {
-        var subject = httpAccessor.HttpContext?.User.FindFirst("sub")?.Value;
-        var name = httpAccessor.HttpContext?.User.FindFirst("name")?.Value;
+        if (this.appUser is null)
+        {
+            var subject = httpAccessor.HttpContext?.User.FindFirst("sub")?.Value;
+            var name = httpAccessor.HttpContext?.User.FindFirst("name")?.Value;
 
-        var user = string.IsNullOrEmpty(subject)
-            ? throw new InvalidOperationException("Unable to determine user claims.")
-            : userService.AddIfMissing(subject, name).GetAwaiter().GetResult();
+            this.appUser = string.IsNullOrEmpty(subject)
+                ? throw new InvalidOperationException("Unable to determine user claims.")
+                : await userService.AddIfMissing(subject, name, ct);
+        }
 
-        this.appUser = user;
-        return user;
+        return this.appUser;
     }
 }

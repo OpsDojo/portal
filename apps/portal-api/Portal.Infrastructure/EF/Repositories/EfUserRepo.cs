@@ -17,6 +17,6 @@ public class EfUserRepo : IUserRepository
         => throw new NotImplementedException();
 
     /// <inheritdoc/>
-    public Task<User?> GetBySubjectClaim(string email, CancellationToken ct = default)
+    public Task<User?> GetBySubjectClaim(string subject, CancellationToken ct = default)
         => throw new NotImplementedException();
 }

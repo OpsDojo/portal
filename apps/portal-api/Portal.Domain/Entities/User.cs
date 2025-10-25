@@ -43,9 +43,9 @@ public sealed record User
         Guid? entityId = null,
         DateTimeOffset? joined = null)
     {
-        if (string.IsNullOrWhiteSpace(displayName))
+        if (string.IsNullOrWhiteSpace(subject))
         {
-            throw new ArgumentException("DisplayName cannot be empty.", nameof(displayName));
+            throw new ArgumentException("Subject cannot be empty.", nameof(subject));
         }
 
         this.Subject = subject;

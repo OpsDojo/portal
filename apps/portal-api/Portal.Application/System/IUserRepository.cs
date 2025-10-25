@@ -14,10 +14,10 @@ public interface IUserRepository
     /// <summary>
     /// Gets a user by the "sub" claim in their access token.
     /// </summary>
-    /// <param name="email">The user email address.</param>
+    /// <param name="subject">The user subject claim.</param>
     /// <param name="ct">The cancellation token.</param>
     /// <returns>A user, or null.</returns>
-    public Task<User?> GetBySubjectClaim(string email, CancellationToken ct = default);
+    public Task<User?> GetBySubjectClaim(string subject, CancellationToken ct = default);
 
     /// <summary>
     /// Adds a new user.

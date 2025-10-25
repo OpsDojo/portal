@@ -28,8 +28,8 @@ public class WeightLogsController(IUserContext userContext, IWeightLogService lo
         [FromQuery] int pageSize = 10,
         CancellationToken ct = default)
     {
-        var userId = userContext.AppUser.Id;
-        var result = await logService.GetLogsAsync(userId, pageNumber, pageSize, ct);
+        var user = await userContext.GetUserAsync(ct);
+        var result = await logService.GetLogsAsync(user.Id, pageNumber, pageSize, ct);
 
         return this.Ok(result);
     }

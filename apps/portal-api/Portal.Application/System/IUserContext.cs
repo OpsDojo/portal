@@ -14,5 +14,7 @@ public interface IUserContext
     /// <summary>
     /// Gets the current application user.
     /// </summary>
-    public User AppUser { get; }
+    /// <param name="ct">The cancellation token.</param>
+    /// <returns>The current application user.</returns>
+    public Task<User> GetUserAsync(CancellationToken ct = default);
 }

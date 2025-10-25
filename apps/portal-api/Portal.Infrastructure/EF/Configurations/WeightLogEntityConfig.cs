@@ -4,6 +4,7 @@
 
 namespace Portal.Infrastructure.EF.Configurations;
 
+using System.Globalization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Portal.Domain.Entities;
@@ -18,6 +19,9 @@ public class WeightLogEntityConfig : IEntityTypeConfiguration<WeightLog>
     public void Configure(EntityTypeBuilder<WeightLog> builder)
     {
         ArgumentNullException.ThrowIfNull(builder);
+
+        var kgPerPound = Weight.KgPerPound.ToString(CultureInfo.InvariantCulture);
+        var kgPerStone = Weight.KgPerStone.ToString(CultureInfo.InvariantCulture);
 
         builder.ToTable("WeightLogs");
         builder.HasKey(s => s.Id);
@@ -34,11 +38,13 @@ public class WeightLogEntityConfig : IEntityTypeConfiguration<WeightLog>
                 .HasColumnType("decimal(10,6)")
                 .IsRequired();
             weight.Property<decimal>("WeightLbs")
+                .HasColumnName("WeightLbs")
                 .HasColumnType("decimal(10,6)")
-                .HasComputedColumnSql($"CAST([WeightKg] / {Weight.KgPerPound} AS decimal(10,6))", stored: true);
+                .HasComputedColumnSql($"CAST([WeightKg] / {kgPerPound} AS decimal(10,6))", stored: true);
             weight.Property<decimal>("WeightStone")
+                .HasColumnName("WeightStone")
                 .HasColumnType("decimal(10,6)")
-                .HasComputedColumnSql($"CAST([WeightKg] / {Weight.KgPerStone} AS decimal(10,6))", stored: true);
+                .HasComputedColumnSql($"CAST([WeightKg] / {kgPerStone} AS decimal(10,6))", stored: true);
         });
 
         builder.HasOne(w => w.User)

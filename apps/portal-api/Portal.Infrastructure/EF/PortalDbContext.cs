@@ -16,12 +16,12 @@ public class PortalDbContext(DbContextOptions<PortalDbContext> options) : DbCont
     /// <summary>
     /// Gets the users table.
     /// </summary>
-    public virtual DbSet<User> Users { get; init; } = default!;
+    public virtual DbSet<User> Users => this.Set<User>();
 
     /// <summary>
     /// Gets the weight logs table.
     /// </summary>
-    public virtual DbSet<WeightLog> WeightLogs { get; init; } = default!;
+    public virtual DbSet<WeightLog> WeightLogs => this.Set<WeightLog>();
 
     /// <inheritdoc/>
     protected override void OnModelCreating(ModelBuilder modelBuilder)
