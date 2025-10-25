@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using Portal.Application.System;
 using Portal.Domain.Entities;
 
-/// <inheritdoc cref="IUserRepository"/>/>
+/// <inheritdoc cref="IUserRepository"/>
 public class EfUserRepo : IUserRepository
 {
     /// <inheritdoc/>
