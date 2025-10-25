@@ -113,7 +113,7 @@ public sealed record Weight(decimal Kg) : IComparable<Weight>
     /// <param name="left">The first weight.</param>
     /// <param name="right">The second weight.</param>
     /// <returns>True if left is greater than right.</returns>
-    public static bool operator >(Weight left, Weight right) => left?.Kg > right?.Kg;
+    public static bool operator >(Weight left, Weight right) => (left?.Kg ?? 0) > (right?.Kg ?? 0);
 
     /// <summary>
     /// Compares two weights.
@@ -121,7 +121,7 @@ public sealed record Weight(decimal Kg) : IComparable<Weight>
     /// <param name="left">The first weight.</param>
     /// <param name="right">The second weight.</param>
     /// <returns>True if left is less than right.</returns>
-    public static bool operator <(Weight left, Weight right) => left?.Kg < right?.Kg;
+    public static bool operator <(Weight left, Weight right) => (left?.Kg ?? 0) < (right?.Kg ?? 0);
 
     /// <summary>
     /// Compares two weights.
@@ -129,7 +129,7 @@ public sealed record Weight(decimal Kg) : IComparable<Weight>
     /// <param name="left">The first weight.</param>
     /// <param name="right">The second weight.</param>
     /// <returns>True if left is greater than or equal to right.</returns>
-    public static bool operator >=(Weight left, Weight right) => left?.Kg >= right?.Kg;
+    public static bool operator >=(Weight left, Weight right) => (left?.Kg ?? 0) >= (right?.Kg ?? 0);
 
     /// <summary>
     /// Compares two weights.
@@ -137,7 +137,7 @@ public sealed record Weight(decimal Kg) : IComparable<Weight>
     /// <param name="left">The first weight.</param>
     /// <param name="right">The second weight.</param>
     /// <returns>True if left is less than or equal to right.</returns>
-    public static bool operator <=(Weight left, Weight right) => left?.Kg <= right?.Kg;
+    public static bool operator <=(Weight left, Weight right) => (left?.Kg ?? 0) <= (right?.Kg ?? 0);
 
     /// <inheritdoc/>
     public int CompareTo(Weight? other) => other is null ? 1 : this.Kg.CompareTo(other.Kg);
