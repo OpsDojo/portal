@@ -59,6 +59,7 @@ public sealed record User
     /// <summary>
     /// Initializes a new instance of the <see cref="User"/> class.
     /// </summary>
+    [ExcludeFromCodeCoverage]
     private User()
     {
         this.Subject = default!;

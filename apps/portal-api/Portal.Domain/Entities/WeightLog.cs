@@ -4,6 +4,7 @@
 
 namespace Portal.Domain.Entities;
 
+using System.Diagnostics.CodeAnalysis;
 using Portal.Domain.ValueObjects;
 
 /// <summary>
@@ -63,6 +64,7 @@ public sealed record WeightLog
     /// <summary>
     /// Initializes a new instance of the <see cref="WeightLog"/> class.
     /// </summary>
+    [ExcludeFromCodeCoverage]
     private WeightLog()
     {
         this.Weight = default!;

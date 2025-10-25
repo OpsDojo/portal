@@ -11,4 +11,24 @@ using Portal.Domain.Entities;
 /// </summary>
 public class WeightLogTests
 {
+    [Fact]
+    public void Constructor_WhenCalled_SetsPropertiesCorrectly()
+    {
+        // Arrange
+        var date = new DateOnly(2024, 1, 1);
+        var weight = new Domain.ValueObjects.Weight(70.5m);
+        var userId = Guid.NewGuid();
+        var id = Guid.NewGuid();
+        const string notes = "Morning weigh-in";
+
+        // Act
+        var weightLog = new WeightLog(date, weight, userId, notes, id);
+
+        // Assert
+        weightLog.Date.ShouldBe(date);
+        weightLog.Weight.ShouldBe(weight);
+        weightLog.UserId.ShouldBe(userId);
+        weightLog.Notes.ShouldBe(notes);
+        weightLog.Id.ShouldBe(id);
+    }
 }
