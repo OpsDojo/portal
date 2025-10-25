@@ -6,7 +6,7 @@ namespace Portal.Host.Controllers;
 
 using Microsoft.AspNetCore.Mvc;
 using Portal.Application.Weather;
-using Portal.Domain.Weather;
+using Portal.Domain.Entities;
 
 /// <summary>
 /// Weather forecast controller.

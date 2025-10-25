@@ -4,7 +4,7 @@
 
 namespace Portal.Application.Weather;
 
-using Portal.Domain.Weather;
+using Portal.Domain.Entities;
 
 /// <summary>
 /// Forecast repository.

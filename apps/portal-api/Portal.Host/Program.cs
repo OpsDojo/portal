@@ -7,10 +7,15 @@ using Portal.Host.Startup;
 var builder = WebApplication.CreateBuilder(args);
 var config = builder.Configuration;
 
+builder.Services.AddInfrastructure(config);
 builder.Services.AddControllers();
 builder.Services.AddCorsSupport(config);
 builder.Services.AddSwaggerSupport(xmlFilePath: SwaggerExtensions.GetXmlFilePath<Program>());
+
+builder.Services.AddSystemFeature();
 builder.Services.AddWeatherFeature();
+builder.Services.AddWeightFeature();
+
 builder.Services.AddHealthChecks();
 builder.Services.AddAuthSupport(config);
 
