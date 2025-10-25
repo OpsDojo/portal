@@ -22,13 +22,28 @@ public class WeightLogTests
         const string notes = "Morning weigh-in";
 
         // Act
-        var weightLog = new WeightLog(date, weight, userId, notes, id);
+        var weightLog = new WeightLog(date, weight, userId, notes, id) { User = new("test") };
 
         // Assert
         weightLog.Date.ShouldBe(date);
         weightLog.Weight.ShouldBe(weight);
         weightLog.UserId.ShouldBe(userId);
+        weightLog.User.Subject.ShouldBe("test");
         weightLog.Notes.ShouldBe(notes);
         weightLog.Id.ShouldBe(id);
+    }
+
+    [Fact]
+    public void Constructor_NoId_SetsProperty()
+    {
+        // Arrange
+        var date = new DateOnly(2024, 1, 1);
+        var weight = new Domain.ValueObjects.Weight(70.5m);
+
+        // Act
+        var weightLog = new WeightLog(date, weight, Guid.Empty);
+
+        // Assert
+        weightLog.Id.ShouldNotBe(Guid.Empty);
     }
 }

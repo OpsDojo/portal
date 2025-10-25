@@ -37,12 +37,12 @@ public sealed record Weight(decimal Kg) : IComparable<Weight>
     /// <summary>
     /// The number of kilograms in one pound.
     /// </summary>
-    public const decimal KgPerPound = 0.45359237m;
+    public static readonly decimal KgPerPound = 0.45359237m;
 
     /// <summary>
     /// The number of kilograms in one stone.
     /// </summary>
-    public const decimal KgPerStone = 6.35029318m;
+    public static readonly decimal KgPerStone = 6.35029318m;
 
     /// <summary>
     /// Creates a weight from kilograms.

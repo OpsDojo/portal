@@ -32,7 +32,7 @@ public class WeightTests
     {
         // Arrange
         const decimal lbs = 154.324m;
-        const decimal expectedKg = lbs * Weight.KgPerPound;
+        var expectedKg = lbs * Weight.KgPerPound;
 
         // Act
         var weight = Weight.From(lbs, WeightUnit.Pounds);
@@ -46,7 +46,7 @@ public class WeightTests
     {
         // Arrange
         const decimal stone = 11.0m;
-        const decimal expectedKg = stone * Weight.KgPerStone;
+        var expectedKg = stone * Weight.KgPerStone;
 
         // Act
         var weight = Weight.From(stone, WeightUnit.Stone);
@@ -214,8 +214,8 @@ public class WeightTests
     {
         // Arrange
         var weight = Weight.FromKg(70.0m);
-        const decimal expectedLbs = 70.0m / Weight.KgPerPound;
-        const decimal expectedStone = 70.0m / Weight.KgPerStone;
+        var expectedLbs = 70.0m / Weight.KgPerPound;
+        var expectedStone = 70.0m / Weight.KgPerStone;
 
         // Act
         var lbs = weight.Lbs;
