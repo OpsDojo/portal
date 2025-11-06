@@ -10,13 +10,16 @@ using Portal.Application.System;
 using Portal.Domain.Entities;
 
 /// <inheritdoc cref="IUserRepository"/>
-public class EfUserRepo : IUserRepository
+public class EfUserRepo(PortalDbContext db) : IUserRepository
 {
     /// <inheritdoc/>
-    public Task CreateAsync(User user, CancellationToken ct = default)
-        => throw new NotImplementedException();
+    public async Task CreateAsync(User user, CancellationToken ct = default)
+    {
+        db.Users.Add(user);
+        await db.SaveChangesAsync(ct);
+    }
 
     /// <inheritdoc/>
-    public Task<User?> GetBySubjectClaim(string subject, CancellationToken ct = default)
-        => throw new NotImplementedException();
+    public async Task<User?> GetBySubjectClaim(string subject, CancellationToken ct = default)
+        => await db.Users.FindAsync([subject], ct);
 }

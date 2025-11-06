@@ -12,7 +12,7 @@ using Portal.Application.Weight;
 public class WeightLogServiceTests
 {
     [Fact]
-    public void GetLogs_WhenCalled_CallsRepo()
+    public async Task GetLogs_WhenCalled_CallsRepo()
     {
         // Arrange
         var mockRepo = new Mock<IWeightLogRepository>();
@@ -20,7 +20,7 @@ public class WeightLogServiceTests
         var ct = CancellationToken.None;
 
         // Act
-        _ = sut.GetLogsAsync(Guid.NewGuid(), 1, 10, ct);
+        _ = await sut.GetLogsAsync(Guid.NewGuid(), 1, 10, ct);
 
         // Assert
         mockRepo.Verify(
