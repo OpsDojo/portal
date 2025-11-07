@@ -22,7 +22,7 @@ public class EfWeightLogRepo(PortalDbContext db) : IWeightLogRepository
             .Where(wl => wl.UserId == userId)
             .OrderByDescending(wl => wl.Date);
 
-        var total = query.Count();
+        var total = await query.CountAsync(ct);
         var items = await query
             .Skip((pageNumber - 1) * pageSize)
             .Take(pageSize)

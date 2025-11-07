@@ -6,6 +6,7 @@ namespace Portal.Infrastructure.EF.Repositories;
 
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Portal.Application.System;
 using Portal.Domain.Entities;
 
@@ -21,5 +22,5 @@ public class EfUserRepo(PortalDbContext db) : IUserRepository
 
     /// <inheritdoc/>
     public async Task<User?> GetBySubjectClaim(string subject, CancellationToken ct = default)
-        => await db.Users.FindAsync([subject], ct);
+        => await db.Users.SingleOrDefaultAsync(r => r.Subject == subject, ct);
 }

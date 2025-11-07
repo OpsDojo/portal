@@ -92,7 +92,7 @@ public class UserContextTests
         return new UserContext(httpAccessor.Object, userService.Object);
     }
 
-    private record BagOfMocks(
+    private sealed record BagOfMocks(
         Mock<IHttpContextAccessor> MockHttpAccessor,
         Mock<IUserService> MockUserService);
 }
