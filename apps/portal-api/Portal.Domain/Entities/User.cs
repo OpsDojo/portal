@@ -70,11 +70,6 @@ public sealed record User
     /// </summary>
     /// <param name="newName">The new display name.</param>
     /// <returns>A new <see cref="User"/> instance with updated display name.</returns>
-    /// <exception cref="ArgumentException">Thrown if <paramref name="newName"/> is null or whitespace.</exception>
-    [SuppressMessage(
-        "StyleCop.CSharp.ReadabilityRules",
-        "SA1101:Prefix local calls with this",
-        Justification = "StyleCop bug")]
     public User ChangeDisplayName(string newName)
         => this with { DisplayName = newName };
 }

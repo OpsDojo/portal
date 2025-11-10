@@ -30,4 +30,11 @@ public class EfWeightLogRepo(PortalDbContext db) : IWeightLogRepository
 
         return (items, total);
     }
+
+    /// <inheritdoc/>
+    public async Task AddAsync(WeightLog log, CancellationToken ct = default)
+    {
+        db.WeightLogs.Add(log);
+        await db.SaveChangesAsync(ct);
+    }
 }

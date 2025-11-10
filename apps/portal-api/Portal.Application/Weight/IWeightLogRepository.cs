@@ -21,4 +21,12 @@ public interface IWeightLogRepository
     /// <returns>The page of records and the total.</returns>
     public Task<(IReadOnlyList<WeightLog>, int total)> GetPageAsync(
         Guid userId, int pageNumber, int pageSize, CancellationToken ct = default);
+
+    /// <summary>
+    /// Adds a new weight log.
+    /// </summary>
+    /// <param name="log">The log.</param>
+    /// <param name="ct">The cancellation token.</param>
+    /// <returns>Async task.</returns>
+    public Task AddAsync(WeightLog log, CancellationToken ct = default);
 }

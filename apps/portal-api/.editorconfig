@@ -36,6 +36,9 @@ dotnet_diagnostic.CA1515.severity = none
 # CA2225: Operator overloads have named alternates
 dotnet_diagnostic.CA2225.severity = none
 
+# SA1101: Prefix local calls with this
+dotnet_diagnostic.SA1101.severity = suggestion
+
 # SA1206: Declaration keywords should follow order
 dotnet_diagnostic.SA1206.severity = none
 

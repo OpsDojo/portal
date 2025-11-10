@@ -17,7 +17,7 @@ public class UserContext(IHttpContextAccessor httpAccessor, IUserService userSer
     {
         if (this.appUser is null)
         {
-            var subject = httpAccessor.HttpContext?.User.FindFirst("sub")?.Value;
+            var subject = httpAccessor.HttpContext?.User.Identity?.Name;
             var name = httpAccessor.HttpContext?.User.FindFirst("name")?.Value;
 
             this.appUser = string.IsNullOrEmpty(subject)
