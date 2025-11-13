@@ -2,11 +2,7 @@
 // Copyright (c) ne1410s. All rights reserved.
 // </copyright>
 
-using System.Globalization;
 using Portal.Host.Startup;
-
-CultureInfo.DefaultThreadCurrentCulture = CultureInfo.InvariantCulture;
-CultureInfo.DefaultThreadCurrentUICulture = CultureInfo.InvariantCulture;
 
 var builder = WebApplication.CreateBuilder(args);
 var config = builder.Configuration;
