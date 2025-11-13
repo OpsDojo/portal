@@ -67,6 +67,12 @@ module apiAppServiceDeploy '../../common-bicep/web/app-service.bicep' = {
         value: uiStaticWebAppDeploy.outputs.appUrl
       }
     ]
+    connectionStrings: [
+      {
+        name: 'PortalDb'
+        value: 'Server=tcp:sql-commoninfra-uks.${environment().suffixes.sqlServerHostname},1433;Initial Catalog=DojoDB;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;Authentication="Active Directory Default";'
+      }
+    ]
     shortName: ''
     prefix: 'api'
     suffix: suffix

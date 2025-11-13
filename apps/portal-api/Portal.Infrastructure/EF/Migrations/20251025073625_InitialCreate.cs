@@ -33,8 +33,8 @@ namespace Portal.Infrastructure.EF.Migrations
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Date = table.Column<DateOnly>(type: "date", nullable: false),
                     WeightKg = table.Column<decimal>(type: "decimal(10,6)", nullable: false),
-                    WeightLbs = table.Column<decimal>(type: "decimal(10,6)", nullable: false, computedColumnSql: "CAST([WeightKg] / 0.45359237 AS decimal(10,6))", stored: true),
-                    WeightStone = table.Column<decimal>(type: "decimal(10,6)", nullable: false, computedColumnSql: "CAST([WeightKg] / 6.35029318 AS decimal(10,6))", stored: true),
+                    WeightLbs = table.Column<decimal>(name: "WeightLbs", type: "decimal(10,6)", nullable: false, computedColumnSql: "CAST([WeightKg] / 0.45359237 AS decimal(10,6))", stored: true),
+                    WeightStone = table.Column<decimal>(name: "WeightStone", type: "decimal(10,6)", nullable: false, computedColumnSql: "CAST([WeightKg] / 6.35029318 AS decimal(10,6))", stored: true),
                     Notes = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: true)
                 },
                 constraints: table =>

@@ -35,6 +35,23 @@ public class EfWeightLogRepoTests
         items[0].Date.ShouldBeGreaterThan(items[^1].Date);
     }
 
+    [Fact]
+    public async Task AddLogAsync_WithData_Inserts()
+    {
+        // Arrange
+        await using var dbContext = GetInMemDb();
+        var sut = new EfWeightLogRepo(dbContext);
+        var userId = Guid.NewGuid();
+        var log = new WeightLog(DateOnly.FromDateTime(DateTime.UtcNow), new(70), userId);
+
+        // Act
+        await sut.AddAsync(log);
+
+        // Assert
+        var logCount = await dbContext.WeightLogs.Where(wl => wl.UserId == userId).CountAsync();
+        logCount.ShouldBe(1);
+    }
+
     private static PortalDbContext GetInMemDb(string? dbName = null)
     {
         var options = new DbContextOptionsBuilder<PortalDbContext>()

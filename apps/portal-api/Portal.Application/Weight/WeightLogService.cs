@@ -17,4 +17,8 @@ public class WeightLogService(IWeightLogRepository logRepo) : IWeightLogService
         var (page, total) = await logRepo.GetPageAsync(userId, pageNumber, pageSize, ct);
         return new PagedResult<WeightLog>(page, total, pageNumber, pageSize);
     }
+
+    /// <inheritdoc/>
+    public async Task AddLogAsync(WeightLog log, CancellationToken ct = default)
+        => await logRepo.AddAsync(log, ct);
 }

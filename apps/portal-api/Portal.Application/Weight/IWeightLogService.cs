@@ -22,4 +22,12 @@ public interface IWeightLogService
     /// <returns>A paged list.</returns>
     public Task<PagedResult<WeightLog>> GetLogsAsync(
         Guid userId, int pageNumber, int pageSize, CancellationToken ct = default);
+
+    /// <summary>
+    /// Adds a new weight log for a user.
+    /// </summary>
+    /// <param name="log">The weight log.</param>
+    /// <param name="ct">The cancellation token.</param>
+    /// <returns>Async task.</returns>
+    public Task AddLogAsync(WeightLog log, CancellationToken ct = default);
 }

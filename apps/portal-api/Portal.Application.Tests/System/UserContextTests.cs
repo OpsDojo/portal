@@ -47,7 +47,7 @@ public class UserContextTests
     public async Task GetUser_ValidClaims_ReturnsExpected()
     {
         // Arrange
-        var sut = GetUserSut(out _, new("sub", "test-sub"), new("name", "test-name"));
+        var sut = GetUserSut(out _, new(ClaimTypes.NameIdentifier, "test-sub"), new("name", "test-name"));
 
         // Act
         var user = await sut.GetUserAsync();
@@ -62,7 +62,7 @@ public class UserContextTests
     public async Task GetUser_MultipleCalls_CallsServiceOnce()
     {
         // Arrange
-        var sut = GetUserSut(out var mocks, new("sub", "test-sub"), new("name", "test-name"));
+        var sut = GetUserSut(out var mocks, new(ClaimTypes.NameIdentifier, "test-sub"), new("name", "test-name"));
 
         // Act
         _ = await sut.GetUserAsync();

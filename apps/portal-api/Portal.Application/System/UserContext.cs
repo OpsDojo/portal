@@ -4,6 +4,7 @@
 
 namespace Portal.Application.System;
 
+using global::System.Security.Claims;
 using Microsoft.AspNetCore.Http;
 using Portal.Domain.Entities;
 
@@ -17,7 +18,7 @@ public class UserContext(IHttpContextAccessor httpAccessor, IUserService userSer
     {
         if (this.appUser is null)
         {
-            var subject = httpAccessor.HttpContext?.User.FindFirst("sub")?.Value;
+            var subject = httpAccessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             var name = httpAccessor.HttpContext?.User.FindFirst("name")?.Value;
 
             this.appUser = string.IsNullOrEmpty(subject)

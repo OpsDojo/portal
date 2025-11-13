@@ -5,8 +5,10 @@
 namespace Portal.Host.Controllers.Weight;
 
 using Microsoft.AspNetCore.Mvc;
+using Portal.Application.Common;
 using Portal.Application.System;
 using Portal.Application.Weight;
+using Portal.Domain.Entities;
 
 /// <summary>
 /// Controller for weight logs management.
@@ -23,7 +25,7 @@ public class WeightLogsController(IUserContext userContext, IWeightLogService lo
     /// <param name="ct">The cancellation token.</param>
     /// <returns>The page of records and the total.</returns>
     [HttpGet]
-    public async Task<IActionResult> GetLogsAsync(
+    public async Task<ActionResult<PagedResult<WeightLog>>> GetLogsAsync(
         [FromQuery] int pageNumber = 1,
         [FromQuery] int pageSize = 10,
         CancellationToken ct = default)
@@ -32,5 +34,25 @@ public class WeightLogsController(IUserContext userContext, IWeightLogService lo
         var result = await logService.GetLogsAsync(user.Id, pageNumber, pageSize, ct);
 
         return this.Ok(result);
+    }
+
+    /// <summary>
+    /// Adds a new weight log for the current user.
+    /// </summary>
+    /// <param name="log">The log.</param>
+    /// <param name="ct">The cancellation token.</param>
+    /// <returns>Async task.</returns>
+    [HttpPost]
+    public async Task<ActionResult> AddLogAsync(
+        [FromBody] WeightLogDto log,
+        CancellationToken ct = default)
+    {
+        ArgumentNullException.ThrowIfNull(log);
+
+        var user = await userContext.GetUserAsync(ct);
+        var record = new WeightLog(log.Date, new(log.Kg), user.Id);
+        await logService.AddLogAsync(record, ct);
+
+        return this.Ok();
     }
 }
