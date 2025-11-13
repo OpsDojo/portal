@@ -85,5 +85,6 @@ module apiAppServiceDeploy '../../common-bicep/web/app-service.bicep' = {
 // Output
 // -----------------------------------------------------------------------------
 output apiAppUrl string = apiAppServiceDeploy.outputs.appUrl
+output apiPrincipalId string = apiAppServiceDeploy.outputs.resourcePrincipalId
 output uiAppUrl string = uiStaticWebAppDeploy.outputs.appUrl
 output uiSwaName string = uiStaticWebAppDeploy.outputs.resourceName
