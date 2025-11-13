@@ -69,6 +69,12 @@ jobs:
             "apiContainerImage": ${{ env.API_CONTAINER }}
           }
 
+    - name: Assign api app to appropriate ad group
+      run: |
+        groupId=$(az ad group show --group "apps" --query objectId -o tsv)
+        principalId=${{ steps.deploy_bicep.outputs.apiPrincipalId }}
+        az ad group member add --group $groupId --member-id $principalId
+
     - name: Extract ui content
       run: |
         docker pull $UI_CONTAINER
